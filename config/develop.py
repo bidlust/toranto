@@ -113,10 +113,9 @@ class Develop( Default ):
     #如果设置成 True (默认情况)，Flask-SQLAlchemy 将会追踪对象的修改并且发送信号。这需要额外的内存， 如果不必要的可以禁用它。
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
-    LOG_PATH = 'E:/www/blog/log/app.log'
+    LOG_PATH = 'E:/toranto/log/app.log'
 
     LOG_LEVEL = "DEBUG"
-
 
     REDIS_HOST = '127.0.0.1'
 

@@ -141,7 +141,7 @@ def get_tree_menu(pid=0, level=1):
 
             if level ==  1:
                 #一级菜单，且只有一个选项；
-                if len(menu_list) == 1:
+                if v[2] != '#':
                     menu_html = '''
                         <li class="">
                             <a class="J_menuItem" href="{}"><i class="fa {}"></i>
