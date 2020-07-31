@@ -14,14 +14,15 @@ from app.models import *
 from flask import session
 
 #blueprints;
-from app.auth import auth as auth_blueprint
 from app.dashboard import dashboard as dashboard_blueprint
+from app.sitesetting import sitesetting as setting_blueprint
 
 envName = os.getenv('APP_ENV') or 'dev'
 app = init_app( envName )
 
-app.register_blueprint(auth_blueprint)
 app.register_blueprint(dashboard_blueprint)
+app.register_blueprint(setting_blueprint)
+
 
 # 开启CSRF防范功能
 csrf =  CSRFProtect(app)
@@ -66,6 +67,15 @@ def server_not_found(e):
     if request.is_xhr:
         return make_response(jsonify({"code" : 1, "message" : "[404]-服务器端暂无法处理请求，请和管理员联系！"}))
     return render_template('404.html')
+
+
+#401
+@app.errorhandler(401)
+def server_not_found(e):
+    app.logger.exception(e)
+    if request.is_xhr:
+        return make_response(jsonify({"code" : 1, "message" : "[401]-Unauthorized！"}))
+    return render_template('401.html')
 
 
 def get_tree_menu(pid=0, level=1):

@@ -140,3 +140,36 @@ class LoginHistory(db.Model):
     def __init__(self, **kwargs):
         self.username = kwargs.get('username')
         self.ip = kwargs.get('ip')
+
+class TorantoSetting(db.Model):
+    __tablename__ = 'toranto_setting'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8',
+        'mysql_collate': 'utf8_unicode_ci'
+    }
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    site_name = Column(String(255), nullable=False)
+    site_active = Column(CHAR(1), nullable=False, server_default='1')
+    site_comment = Column(CHAR(1), nullable=False, server_default='1')
+    site_title = Column(String(255), nullable=True)
+    site_logo = Column(String(255), nullable=True)
+    site_keywords = Column(String(255), nullable=True)
+    site_description = Column(Text, nullable=True)
+    site_foot = Column(String(255), nullable=True)
+    site_domain = Column(String(255), nullable=True)
+    created_by = Column(String(255), nullable=False, unique=True)
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+
+    def __init__(self, **kwargs):
+        self.site_name          = kwargs.get('site_name')
+        self.site_active        = kwargs.get('site_active')
+        self.site_comment       = kwargs.get('site_comment')
+        self.site_title         = kwargs.get('site_title')
+        self.site_logo          = kwargs.get('site_logo')
+        self.site_keywords      = kwargs.get('site_keywords')
+        self.site_description   = kwargs.get('site_description')
+        self.site_foot          = kwargs.get('site_foot')
+        self.site_domain        = kwargs.get('site_domain')

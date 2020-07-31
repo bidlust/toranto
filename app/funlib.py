@@ -14,6 +14,7 @@ from flask import session, request, make_response, jsonify, redirect
 import cx_Oracle
 import functools
 
+
 # 把日志相关的配置封装成一个日志初始化函数
 def setup_log(Config):
     # 设置日志的记录等级
@@ -169,5 +170,4 @@ def get_user_ip():
         client_ip = request.remote_addr
 
     return client_ip
-
 
