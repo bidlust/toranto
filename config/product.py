@@ -149,6 +149,10 @@ class Product( Default ):
 
     MONGOD_DBNAME = ''
 
+    PAGE_SIZE = 20
+
+    PAGE_INDEX = 1
+
     pass
 
 
