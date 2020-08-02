@@ -16,12 +16,18 @@ from flask import session
 #blueprints;
 from app.dashboard import dashboard as dashboard_blueprint
 from app.sitesetting import sitesetting as setting_blueprint
+from app.article import article as article_blueprint
+
 
 envName = os.getenv('APP_ENV') or 'dev'
 app = init_app( envName )
 
 app.register_blueprint(dashboard_blueprint)
 app.register_blueprint(setting_blueprint)
+app.register_blueprint(article_blueprint)
+
+
+
 
 
 # 开启CSRF防范功能

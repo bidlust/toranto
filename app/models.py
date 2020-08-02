@@ -173,3 +173,51 @@ class TorantoSetting(db.Model):
         self.site_description   = kwargs.get('site_description')
         self.site_foot          = kwargs.get('site_foot')
         self.site_domain        = kwargs.get('site_domain')
+
+
+
+class  Article(db.Model):
+    __tablename__ = 'toranto_article'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8',
+        'mysql_collate': 'utf8_unicode_ci'
+    }
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    article_category = Column(Integer, nullable=True)
+    article_title = Column(String(255), nullable=False)
+    article_author = Column(String(255), nullable=False)
+    article_desc = Column(Text, nullable=True)
+    article_content = Column(Text, nullable=False)
+    article_tag = Column(String(255), nullable=True)
+    article_click = Column(Integer, nullable=False, server_default='1')
+    article_picture = Column(String(255), nullable=True)
+    sq = Column(Integer, nullable=False, server_default='1')
+    top = Column(Integer, nullable=False, server_default='1')
+    iscomment = Column(CHAR(1), nullable=False, server_default='1')
+    ispublish = Column(CHAR(1), nullable=False, server_default='1')
+    isvisible = Column(CHAR(1), nullable=False, server_default='1')
+    istoolbar = Column(CHAR(1), nullable=False, server_default='1')
+    date_expire = Column(DateTime, nullable=False, server_default='2120-01-01 00:00:00')
+    valid = Column(CHAR(1), nullable=False, server_default='1')
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(DateTime, nullable=True)
+
+    def __init__(self, **kwargs):
+        self.article_category    = kwargs.get('article_category')
+        self.article_title       = kwargs.get('article_title')
+        self.article_author      = kwargs.get('article_author')
+        self.article_desc        = kwargs.get('article_desc')
+        self.article_content     = kwargs.get('article_content')
+        self.article_tag         = kwargs.get('article_tag')
+        self.article_click       = kwargs.get('article_click')
+        self.article_picture     = kwargs.get('article_picture')
+        self.sq                  = kwargs.get('sq')
+        self.iscomment           = kwargs.get('iscomment')
+        self.top               = kwargs.get('top')
+        self.ispublish           = kwargs.get('ispublish')
+        self.isvisible           = kwargs.get('isvisible')
+        self.istoolbar           = kwargs.get('istoolbar')
+        self.date_expire         = kwargs.get('date_expire')
