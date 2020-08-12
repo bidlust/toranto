@@ -221,6 +221,3 @@ class  Article(db.Model):
         self.isvisible           = kwargs.get('isvisible')
         self.istoolbar           = kwargs.get('istoolbar')
         self.date_expire         = kwargs.get('date_expire')
-
-    def to_dict(self):
-        return { c.name: getattr(self, c.name, None) for c in self.__table__.columns }

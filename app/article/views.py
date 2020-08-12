@@ -9,6 +9,8 @@ from app import db
 from app.models import Article
 from flask import current_app as app
 import datetime
+from app.funlib import *
+from sqlalchemy.sql import func
 
 
 @article.route('/lists/', methods=['POST', 'GET'])
@@ -34,19 +36,23 @@ def article_lists():
         if not 'root' in session.get('role'):
             params.append(Article.article_author==session.get('username'))
 
-        pagination = db.session.query(Article.article_title).filter(*params)\
+        
+        pagination = db.session.query(
+            Article.article_title,
+            func.date_format( Article.created_at, "%Y-%m-%d %H:%m:%S"),
+            Article.article_author,
+            Article.article_click,
+            Article.top,
+            Article.iscomment,
+            Article.ispublish,
+            Article.isvisible
+        ).filter(*params)\
             .order_by(Article.top.desc(), Article.sq.desc())\
             .paginate(pageNumber, per_page=pageSize, error_out=True)
 
-        pagination = Article.query().filter(*params) \
-            .order_by(Article.top.desc(), Article.sq.desc()) \
-            .paginate(pageNumber, per_page=pageSize, error_out=True)
-
-        pages = pagination.pages
         total = pagination.total
         items = pagination.items
-        print( pages )
-        print( total )
-        print([  x.to_dict() for x in items ] )
-        return make_response(jsonify({"code" : 0, "rows": items , "total":total}))
+        title = ['title', 'created', 'author', 'click', 'top', 'iscomment', 'ispublish', 'isvisible' ]
+        return make_response(jsonify({"code" : 0, "rows": zip_dict(title, list( items ) ) , "total":total}))
+
     return render_template('article.html')

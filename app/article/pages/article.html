@@ -97,25 +97,93 @@ var TableInit = function () {
             detailView: false,                   //是否显示父子表
             paginationPreText: "上一页",
             paginationNextText: "下一页",
-            columns: [{
-                checkbox: true
-            }, {
-                field: 'title',
-                title: '新闻名称'
-            }, {
-                field: 'cons',
-                title: '新闻内容'
-            }, {
-                field: 'pic',
-                title: '新闻图片'
-            }, {
-                field: 'classID',
-                title: '分类',
-                align: 'center'
-            }, {
-                    field: 'times',
-                    title: '时间'
-                },]
+            columns: [
+                {
+                    checkbox: true
+                }, {
+                    field: 'title',
+                    title: '标题',
+                }, {
+                    field: 'author',
+                    title: '作者',
+                    align: 'center',
+                }, {
+                    field: 'click',
+                    title: '点击量',
+                    align: 'center',
+                }, {
+                    field: 'top',
+                    title: '是否置顶',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value == 1){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-primary">×</span>'
+                        }
+                    }
+                }, {
+                    field: 'iscomment',
+                    title: '是否允许评论',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value == 1){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-primary">×</span>'
+                        }
+                    }
+                },{
+                    field: 'ispublish',
+                    title: '发布状态',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value == 1){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-primary">×</span>'
+                        }
+                    }
+                },{
+                    field: 'isvisible',
+                    title: '显示状态',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value == 1){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-primary">×</span>'
+                        }
+                    }
+                },{
+                    field: 'created',
+                    title: '创建时间',
+                    align: 'center'
+                },{
+                    field: 'operate',
+                    title: '操作',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 200,
+                    events: {
+                        'click #edit': function (e, value, row, index) {
+                            $('#id').val(row.Id);
+                            $('#name').val(row.Name);
+                            $('#gender').val(row.Gender);
+                            $('#age').val(row.Age);
+                        },
+                        'click #delete': function (e, value, row, index) {
+                            deleteInfo(row.Id);
+                        }
+                    },
+                    formatter: function (value, row, index) {
+                        var result = "";
+                        result += '<button class=" editBtn btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">编辑</button>';
+                        result += '<button class=" deleteBtn btn btn-danger btn-sm" style="margin-left:10px;">删除</button>';
+                        return result;
+                    }
+                }
+            ]
         });
     };
 
