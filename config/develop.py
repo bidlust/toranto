@@ -89,7 +89,7 @@ class Develop( Default ):
     SQLALCHEMY_BINDS = ''
 
     #如果设置成 True，SQLAlchemy 将会记录所有 发到标准输出(stderr)的语句，这对调试很有帮助。
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
     #可以用于显式地禁用或者启用查询记录。查询记录在调试或者测试模式下自动启用。更多信息请参阅 get_debug_queries()。
     SQLALCHEMY_RECORD_QUERIES = ''

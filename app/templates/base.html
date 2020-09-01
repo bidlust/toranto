@@ -34,7 +34,7 @@
     <script src="{{ url_for('static', filename='libs/hplus/hplus.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/contabs.min.js') }}"></script>
     <script src="{{ url_for('static', filename='libs/pace/pace.min.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
 
 
 </head>
@@ -53,6 +53,7 @@ $.ajaxSetup({
         }
     }
 })
+$("body").on("click", ".B_menuItem", openTab)
 </script>
 </body>
 </html>
