@@ -17,6 +17,7 @@ from flask import session
 from app.dashboard import dashboard as dashboard_blueprint
 from app.sitesetting import sitesetting as setting_blueprint
 from app.article import article as article_blueprint
+from app.category import category as category_blueprint
 
 
 envName = os.getenv('APP_ENV') or 'dev'
@@ -25,6 +26,7 @@ app = init_app( envName )
 app.register_blueprint(dashboard_blueprint)
 app.register_blueprint(setting_blueprint)
 app.register_blueprint(article_blueprint)
+app.register_blueprint(category_blueprint)
 
 
 

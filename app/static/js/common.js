@@ -177,3 +177,12 @@ function openTab() {
      }
      return false
  }
+
+
+function refreshPage(){
+    window.location.reload();
+}
+
+function closeTabPage(){
+    $('.J_menuTabs a.active i', parent.document).click();
+}

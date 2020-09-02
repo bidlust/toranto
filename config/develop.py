@@ -188,4 +188,15 @@ class Develop( Default ):
 
     PAGE_INDEX = 1
 
+
+    #后台返回；
+    RESPONSE_SUCCESS_CODE = 0
+    RESPONSE_SUCCESS_MESSAGE = '恭喜，操作成功！'
+
+    RESPONSE_ERROR_CODE = 1
+    RESPONSE_ERROR_MESSAGE = '操作失败,请与管理员联系！'
+
+    RESPONSE_PARAM_ERROR_CODE = 2
+    RESPONSE_PARAM_ERROR_MESSAGE = '参数传递错误！'
+
     pass

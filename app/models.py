@@ -12,8 +12,8 @@ class User(db.Model):
     __tablename__ = 'user'
     __table_args__ = {
         'mysql_engine' : 'InnoDB',
-        'mysql_charset' : 'utf8',
-        'mysql_collate': 'utf8_unicode_ci'
+        'mysql_charset' : 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -55,8 +55,8 @@ class Role(db.Model):
     __tablename__ = 'role'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8',
-        'mysql_collate': 'utf8_unicode_ci'
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -77,8 +77,8 @@ class UserRoleMap(db.Model):
     __tablename__ = 'user_role_map'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8',
-        'mysql_collate': 'utf8_unicode_ci'
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -93,8 +93,8 @@ class Modules(db.Model):
     __tablename__ = 'module'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8',
-        'mysql_collate': 'utf8_unicode_ci'
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
     id          = Column(Integer, primary_key=True, autoincrement=True)
@@ -113,8 +113,8 @@ class RoleModuleMap(db.Model):
     __tablename__ = 'role_module'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8',
-        'mysql_collate': 'utf8_unicode_ci'
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -128,8 +128,8 @@ class LoginHistory(db.Model):
     __tablename__ = 'login_history'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8',
-        'mysql_collate': 'utf8_unicode_ci'
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
     id          = Column(Integer, primary_key=True, autoincrement=True)
@@ -145,8 +145,8 @@ class TorantoSetting(db.Model):
     __tablename__ = 'toranto_setting'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8',
-        'mysql_collate': 'utf8_unicode_ci'
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -180,8 +180,8 @@ class  Article(db.Model):
     __tablename__ = 'toranto_article'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8',
-        'mysql_collate': 'utf8_unicode_ci'
+        'mysql_charset': 'utf8mb4mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -193,6 +193,7 @@ class  Article(db.Model):
     article_tag = Column(String(255), nullable=True)
     article_click = Column(Integer, nullable=False, server_default='1')
     article_picture = Column(String(255), nullable=True)
+    article_password = Column(String(255), nullable=True)
     sq = Column(Integer, nullable=False, server_default='1')
     top = Column(Integer, nullable=False, server_default='1')
     iscomment = Column(CHAR(1), nullable=False, server_default='1')
@@ -205,6 +206,14 @@ class  Article(db.Model):
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     deleted_at = Column(DateTime, nullable=True)
 
+    @property
+    def password(self):
+        raise AttributeError("Password is not a readable attribute")
+
+    @password.setter
+    def password(self, password):
+        self.article_password = generate_password_hash(password)
+
     def __init__(self, **kwargs):
         self.article_category    = kwargs.get('article_category')
         self.article_title       = kwargs.get('article_title')
@@ -216,8 +225,27 @@ class  Article(db.Model):
         self.article_picture     = kwargs.get('article_picture')
         self.sq                  = kwargs.get('sq')
         self.iscomment           = kwargs.get('iscomment')
-        self.top               = kwargs.get('top')
+        self.top                 = kwargs.get('top')
         self.ispublish           = kwargs.get('ispublish')
         self.isvisible           = kwargs.get('isvisible')
         self.istoolbar           = kwargs.get('istoolbar')
         self.date_expire         = kwargs.get('date_expire')
+
+
+class Category(db.Model):
+    __tablename__ = 'toranto_category'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    category_name = Column(String(255), nullable=False)
+    category_desc = Column(String(2048), nullable=True)
+    category_creator = Column(String(2048), nullable=True, default="admin")
+    valid = Column(CHAR(1), nullable=False, server_default='1')
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(DateTime, nullable=True)
+

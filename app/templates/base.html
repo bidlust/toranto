@@ -47,6 +47,17 @@
     <script src="{{ url_for('static', filename='libs/pace/pace.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/common.js') }}"></script>
 
+     <!-- laydate -->
+    <script src="{{ url_for('static', filename='libs/layer/laydate/laydate.js') }}"></script>
+
+    <!-- jquery validation -->
+    <script src="{{ url_for('static', filename='libs/validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/validation/dist/localization/messages_zh.js') }}"></script>
+
+    <!-- ueditor -->
+	<script src="{{ url_for('static', filename='libs/ueditor/ueditor.config.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/ueditor/ueditor.all.js') }}"></script>
+
 
 </head>
 
@@ -65,6 +76,8 @@ $.ajaxSetup({
     }
 })
 $("body").on("click", ".B_menuItem", openTab)
+$("body").on("click", ".refreshButton", refreshPage)
+$("body").on("click", ".closeTabButton", closeTabPage)
 </script>
 </body>
 </html>

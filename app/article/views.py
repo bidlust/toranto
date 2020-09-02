@@ -45,14 +45,15 @@ def article_lists():
             Article.top,
             Article.iscomment,
             Article.ispublish,
-            Article.isvisible
+            Article.isvisible,
+            Article.article_password
         ).filter(*params)\
             .order_by(Article.top.desc(), Article.sq.desc())\
             .paginate(pageNumber, per_page=pageSize, error_out=True)
 
         total = pagination.total
         items = pagination.items
-        title = ['title', 'created', 'author', 'click', 'top', 'iscomment', 'ispublish', 'isvisible' ]
+        title = ['title', 'created', 'author', 'click', 'top', 'iscomment', 'ispublish', 'isvisible', 'ispassword' ]
         return make_response(jsonify({"code" : 0, "rows": zip_dict(title, list( items ) ) , "total":total}))
 
     return render_template('article.html')
