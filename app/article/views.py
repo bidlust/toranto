@@ -56,3 +56,9 @@ def article_lists():
         return make_response(jsonify({"code" : 0, "rows": zip_dict(title, list( items ) ) , "total":total}))
 
     return render_template('article.html')
+
+
+@article.route('/create/', methods=['POST', 'GET'])
+def article_create():
+
+    return render_template('article_create.html')
