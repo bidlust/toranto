@@ -6,7 +6,7 @@
 <div class="col-sm-12">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>文章管理
+            <h5>友情链接
                 <small>基本设置</small>
             </h5>
             <div class="ibox-tools">
@@ -30,11 +30,7 @@
             </div>
         </div>
         <div class="ibox-content">
-             <p>
-                <button type="button" class="btn btn-w-m btn-primary B_menuItem" data-action="{{ url_for('article.article_create') }}" data-index="123456" data-title="hello">
-                    <i class="fa fa-plus-square"></i>&nbsp;新增
-                </button>
-                &nbsp;&nbsp;
+            <p>
                 <button type="button" class="btn btn-w-m btn-warning refreshButton">
                     <i class="fa fa-refresh"></i>&nbsp;刷新页面
                 </button>
@@ -44,7 +40,52 @@
     </div>
 </div>
 
+
 <script>
+
+window.operateEvents = {
+    'click .delete': function (e, value, row, index) {
+        layer.confirm("确定删除？",{
+		btn: ['确定', '取消']
+	    }, function () {
+		// 按钮1的事件
+		$.get("{{url_for('link.link_delete')}}?id=" + row.id, function(response){
+		    $("#dataTable").bootstrapTable('refresh');
+		    layer.alert(response.message);
+		})
+	    }, function(){
+		// 按钮2的事件
+	    });
+    },
+     'click .invalid': function (e, value, row, index) {
+        layer.confirm("设置为无效？",{
+		btn: ['确定', '取消']
+	    }, function () {
+		// 按钮1的事件
+		$.get("{{url_for('link.link_invalid')}}?id=" + row.id, function(response){
+		    $("#dataTable").bootstrapTable('refresh');
+		    layer.alert(response.message);
+		})
+	    }, function(){
+		// 按钮2的事件
+	    });
+    },
+    'click .valid': function (e, value, row, index) {
+        layer.confirm("设置为有效？",{
+		btn: ['确定', '取消']
+	    }, function () {
+		// 按钮1的事件
+		$.get("{{url_for('link.link_valid')}}?id=" + row.id, function(response){
+		    $("#dataTable").bootstrapTable('refresh');
+		    layer.alert(response.message);
+		})
+	    }, function(){
+		// 按钮2的事件
+	    });
+    }
+}
+
+
 $(function () {
 
     //1.初始化Table
@@ -55,6 +96,35 @@ $(function () {
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
 
+    $("#categoryForm").validate({
+        rules: {
+            category_name : "required",
+        },
+        messages: {
+            category_name : "请输入分类名称",
+        }
+    })
+
+    $("#categorySubmit").click(function(){
+        if( $("#categoryForm").valid() ){
+            let fd = new FormData(document.getElementById("categoryForm"));
+            $.ajax({
+              url: "{{ url_for('category.category_add') }}",
+              type: "POST",
+              data: fd,
+              processData: false,  // 不处理数据
+              contentType: false,   // 不设置内容类型
+              success: function(response){
+                layer.alert(response.message);
+                if(response.code == 0){
+                    $('#categoryForm')[0].reset()
+                    $('#categoryModal').modal('hide');
+                    $("#dataTable").bootstrapTable('refresh');
+                }
+              }
+            });
+        }
+    })
 });
 
 
@@ -63,8 +133,8 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#dataTable').bootstrapTable({
-            url: "{{ url_for('article.article_lists') }}",         //请求后台的URL（*）
-           method: 'post',                      //请求方式（*）
+            url: "{{ url_for('link.link_lists') }}",         //请求后台的URL（*）
+            method: 'post',                      //请求方式（*）
             dataType: 'json',
             theadClasses:'.thead-light',
             striped: true,                      //是否显示行间隔色
@@ -92,104 +162,57 @@ var TableInit = function () {
             detailView: false,                   //是否显示父子表
             paginationPreText: "上一页",
             paginationNextText: "下一页",
-            columns: [
-                {
+            columns: [{
                     field: 'SerialNumber',
                     title: '序号',
                     formatter: function (value, row, index) {
                         return index+1;
-                    }
+                    },
+                    width: 50
+                },
+                 {
+                    field: 'link_name',
+                    title: '名称',
+                },{
+                    field: 'link_href',
+                    title: '链接地址',
                 }, {
-                    field: 'title',
-                    title: '标题',
+                    field: 'link_desc',
+                    title: '描述',
+                    width: 300
+                },  {
+                    field: 'link_creator',
+                    title: '提交人',
                 }, {
-                    field: 'author',
-                    title: '作者',
-                    align: 'center',
+                    field: 'link_field',
+                    title: '行业背景',
                 }, {
-                    field: 'click',
-                    title: '点击量',
-                    align: 'center',
-                }, {
-                    field: 'top',
-                    title: '是否置顶',
-                    align: 'center',
+                    field: 'valid',
+                    title: '是否有效',
                     formatter: function (value, row, index) {
                         if(value == 1){
-                            return '<span class="badge badge-primary">√</span>'
+                            return '<span class="badge badge-primary" >√</span>'
                         }else{
                             return '<span class="badge badge-danger">×</span>'
                         }
                     }
                 }, {
-                    field: 'iscomment',
-                    title: '是否允许评论',
-                    align: 'center',
-                    formatter: function (value, row, index) {
-                        if(value == 1){
-                            return '<span class="badge badge-primary">√</span>'
-                        }else{
-                            return '<span class="badge badge-danger">×</span>'
-                        }
-                    }
-                },{
-                    field: 'ispublish',
-                    title: '发布状态',
-                    align: 'center',
-                    formatter: function (value, row, index) {
-                        if(value == 1){
-                            return '<span class="badge badge-primary">√</span>'
-                        }else{
-                            return '<span class="badge badge-danger">×</span>'
-                        }
-                    }
-                },{
-                    field: 'isvisible',
-                    title: '显示状态',
-                    align: 'center',
-                    formatter: function (value, row, index) {
-                        if(value == 1){
-                            return '<span class="badge badge-primary">√</span>'
-                        }else{
-                            return '<span class="badge badge-danger">×</span>'
-                        }
-                    }
-                },{
-                    field: 'ispassword',
-                    title: '密码保护',
-                    align: 'center',
-                    formatter: function (value, row, index) {
-                        if(value){
-                            return '<span class="badge badge-primary">√</span>'
-                        }else{
-                            return '<span class="badge badge-danger">×</span>'
-                        }
-                    }
-                },{
-                    field: 'created',
+                    field: 'created_at',
                     title: '创建时间',
-                    align: 'center'
                 },{
                     field: 'operate',
                     title: '操作',
-                    align: 'center',
                     valign: 'middle',
                     width: 200,
-                    events: {
-                        'click #edit': function (e, value, row, index) {
-                            $('#id').val(row.Id);
-                            $('#name').val(row.Name);
-                            $('#gender').val(row.Gender);
-                            $('#age').val(row.Age);
-                        },
-                        'click #delete': function (e, value, row, index) {
-                            deleteInfo(row.Id);
-                        }
-                    },
+                    events: operateEvents,
                     formatter: function (value, row, index) {
                         var result = "";
-                        result += '<button class=" editBtn btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">编辑</button>';
-                        result += '<button class=" deleteBtn btn btn-danger btn-sm" style="margin-left:10px;">删除</button>';
+                        if(row.valid == 0){
+                            result += '<button class="valid btn btn-primary btn-sm" style="margin-left:10px;">设为有效</button>';
+                        }else{
+                            result += '<button class="invalid btn btn-warning btn-sm" style="margin-left:10px;">设为无效</button>';
+                        }
+                        result += '<button class="delete btn btn-danger btn-sm" style="margin-left:10px;">删除</button>';
                         return result;
                     }
                 }

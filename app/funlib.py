@@ -10,10 +10,10 @@ import os
 import datetime
 import calendar
 from flask import current_app as app
-from flask import session, request, make_response, jsonify, redirect
+from flask import session, request, make_response, jsonify, redirect, abort
 import cx_Oracle
 import functools
-
+from . import db
 
 # 把日志相关的配置封装成一个日志初始化函数
 def setup_log(Config):
@@ -160,8 +160,49 @@ def login_required(func):
     return decorator
 
 
+def auth_required(func):
+    @functools.wraps(func)
+    def decorator(*args, **kwargs):
+        request_uri = request.path
+        if request_uri:
+            sql = '''
+                select
+                        e.id,
+                        e.parentId,
+                        e.action,
+                        e.cname,
+                        e.icon
+                from
+                        user as a left join user_role_map as b on a.username=b.user
+                        left join role as c on b.role=c.role
+                        left join role_module as d on c.role=d.role
+                        left join module as e on e.id = d.module
+                        where 1
+                        and a.valid='1'
+                        and b.valid='1'
+                        and c.valid='1'
+                        and e.valid='1'
+                        and e.action='{}'
+                        and a.username='{}'
+                        and e.level in (1,2,3)
+                        order by e.sq ASC
+            '''.format(
+                request_uri,
+                session.get('username')
+            )
+            rtf = db.session.execute(sql)
+            if rtf.rowcount < 1:
+                if request.is_xhr:
+                    return make_response(jsonify({
+                        "code": app.config.get('RESPONSE_UNAUTH_CODE'),
+                        "message": app.config.get('RESPONSE_UNAUTH_MESSAGE'),
+                    }))
+                abort(401)
+        return func(*args, **kwargs)
+    return decorator
+
+
 def get_user_ip():
-    client_ip = '127.0.0.1'
     try:
         client_ip = request.environ.get['HTTP_X_REAL_IP']
     except Exception:

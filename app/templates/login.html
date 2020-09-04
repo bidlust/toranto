@@ -52,11 +52,13 @@
                 |
                 <a href="register.html">注册一个新账号</a>
             </p>
+            {% if get_flashed_messages(): %}
             <div class="alert alert-danger">
             {% for msg in get_flashed_messages(): %}
             <p>{{msg}}</p>
             {% endfor %}
             </div>
+            {% endif %}
 
 
         </form>

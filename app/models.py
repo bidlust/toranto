@@ -180,7 +180,7 @@ class  Article(db.Model):
     __tablename__ = 'toranto_article'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8mb4mb4',
+        'mysql_charset': 'utf8mb4',
         'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
@@ -236,7 +236,7 @@ class Category(db.Model):
     __tablename__ = 'toranto_category'
     __table_args__ = {
         'mysql_engine': 'InnoDB',
-        'mysql_charset': 'utf8mb4mb4',
+        'mysql_charset': 'utf8mb4',
         'mysql_collate': 'utf8mb4_unicode_ci'
     }
 
@@ -248,4 +248,43 @@ class Category(db.Model):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     deleted_at = Column(DateTime, nullable=True)
+
+
+class Link(db.Model):
+    __tablename__ = 'toranto_link'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    link_name = Column(String(255), nullable=False)
+    link_href = Column(String(255), nullable=False)
+    link_desc = Column(String(2048), nullable=True)
+    link_creator = Column(String(255), nullable=False)
+    link_from = Column(String(255), nullable=True)
+    link_field = Column(String(255), nullable=True)
+    valid = Column(CHAR(1), nullable=False, server_default='0')
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(DateTime, nullable=True)
+
+
+class Industry(db.Model):
+    __tablename__ = 'toranto_industry'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    industry_name =  Column(String(255), nullable=False)
+    valid = Column(CHAR(1), nullable=False, server_default='1')
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(DateTime, nullable=True)
+
+
+    def __init__(self, **kwargs):
+        self.industry_name = kwargs.get('industry_name')
 

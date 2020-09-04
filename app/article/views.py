@@ -4,7 +4,6 @@
 
 from flask import make_response, render_template, jsonify, request, flash, session
 from . import article
-from app.models import TorantoSetting
 from app import db
 from app.models import Article
 from flask import current_app as app

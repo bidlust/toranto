@@ -199,4 +199,8 @@ class Develop( Default ):
     RESPONSE_PARAM_ERROR_CODE = 2
     RESPONSE_PARAM_ERROR_MESSAGE = '参数传递错误！'
 
+    RESPONSE_UNAUTH_CODE = 3
+    RESPONSE_UNAUTH_MESSAGE = '您访问的资源需要授权！'
+
+
     pass

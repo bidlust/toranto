@@ -5,12 +5,12 @@ from flask import Flask
 from flask_session import Session
 from redis import StrictRedis
 from flask_sqlalchemy import SQLAlchemy
-from .funlib import setup_log
 from config import get_config
 
 #配置数据库连接；
 db = SQLAlchemy()
 
+from .funlib import setup_log
 
 def init_app(cfg):
 
