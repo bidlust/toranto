@@ -87,7 +87,7 @@
 					<label class="col-sm-1 control-label">配图:</label>
 
 					<div class="col-sm-10">
-
+						<input id="article_picture" name="article_picture" type="file" multiple>
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
@@ -218,11 +218,51 @@
 </div>
 
 <!-- 实例化编辑器 -->
-<script type="text/javascript">
+<script type="text/javascript" charset="gbk">
 	$('#date_expire').val(laydate.now(+36500, 'YYYY-MM-DD hh:mm:ss'));
 	var ue = UE.getEditor('container', {
     	initialFrameHeight : 400
 });
+
+
+//上传文章配图；
+$("#article_picture").fileinput({
+		language: 'zh', 										//设置语言
+		uploadUrl:"", 											//上传的地址
+		allowedFileExtensions: ['jpg', 'gif', 'png','jpeg'],	//接收的文件后缀
+		//uploadExtraData:{"id": 1, "fileName":'123.mp3'},
+		uploadAsync: false, 									//默认异步上传
+		showUpload:true, 										//是否显示上传按钮
+		showRemove :false, 										//显示移除按钮
+		showPreview :true, 										//是否显示预览
+		showCaption:false,										//是否显示标题
+		browseClass:"btn btn-primary", 							//按钮样式
+		dropZoneEnabled: false,									//是否显示拖拽区域
+		minImageWidth: 50, 										//图片的最小宽度
+		minImageHeight: 50,										//图片的最小高度
+		//maxImageWidth: 1000,									//图片的最大宽度
+		//maxImageHeight: 1000,									//图片的最大高度
+		maxFileSize:0,											//单位为kb，如果为0表示不限制文件大小
+		//minFileCount: 0,
+		maxFileCount:5, 										//表示允许同时上传的最大文件个数
+		enctype:'multipart/form-data',
+		validateInitialCount:true,
+		previewFileIcon: "<iclass='glyphicon glyphicon-king'></i>",
+		msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+		fileActionSettings:{
+			showRemove: true, 	//移除
+			showUpload: false, 	//上传
+			showZoom: true, 	//放大
+			showDrag: true,
+		},
+		uploadExtraData:{}, //额外参数设置
+	}).on('filebatchuploadsuccess', function(event, data, previewId, index) {
+		if (data.response.code != 200){
+			layer.alert(data.response.msg)
+			return false;
+		}
+		$("#attach_id").val(data.response.data); 				//赋值已上传的文件ID到隐藏input中
+	})
 </script>
 
 {% endblock %}

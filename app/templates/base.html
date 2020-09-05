@@ -19,6 +19,9 @@
 
     <link href="{{ url_for('static', filename='libs/markdown/css/bootstrap-markdown.min.css') }}" rel="stylesheet">
 
+    <link href="{{ url_for('static', filename='libs/fileinput/css/fileinput.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='libs/fileinput/themes/explorer-fa/theme.css') }}" rel="stylesheet">
+
     <script src="{{ url_for('static', filename='libs/jquery/2.1.4/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='libs/bootstrap/3.3.6/js/bootstrap.min.js') }}"></script>
 
@@ -53,6 +56,13 @@
     <!-- jquery validation -->
     <script src="{{ url_for('static', filename='libs/validation/jquery.validate.min.js') }}"></script>
     <script src="{{ url_for('static', filename='libs/validation/dist/localization/messages_zh.js') }}"></script>
+
+    <!-- file upload -->
+    <script src="{{ url_for('static', filename='libs/fileinput/js/plugins/sortable.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/fileinput/js/fileinput.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/fileinput/js/locales/zh.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/fileinput/themes/explorer-fa/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/fileinput/themes/fa/theme.js') }}"></script>
 
     <!-- ueditor -->
 	<script src="{{ url_for('static', filename='libs/ueditor/ueditor.config.js') }}"></script>
