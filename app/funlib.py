@@ -224,3 +224,115 @@ def zip_dict(title, contents):
             return Exception("[Error] - title and content length not equals!")
         zipped_list.append( { k:v for (k,v) in zip(title, content) } )
     return zipped_list
+
+
+def get_page_name():
+    current_path = request.path
+    sql = "select cname from module where action='{}' and valid='1' limit 1".format( current_path )
+    query = db.session.execute(sql)
+    print(query[0])
+
+def get_tree_menu(pid=0, level=1):
+
+    #最多支持三级，多了无效！
+    if level == 1:
+        pass
+    elif level == 2:
+        class_level = 'second'
+    elif level == 3:
+        class_level = 'third'
+    else:
+        class_level = 'unknown'
+
+    tree_html = ''
+    sql = '''
+            select
+                e.id,
+                e.parentId,
+                e.action,
+                e.cname,
+                e.icon
+            from
+                user as a left join user_role_map as b on a.username=b.user
+                left join role as c on b.role=c.role
+                left join role_module as d on c.role=d.role
+                left join module as e on e.id = d.module
+                where 1
+                and a.valid='1'
+                and b.valid='1'
+                and c.valid='1'
+                and e.valid='1'
+                and e.parentId={}
+                and a.username='{}'
+                and e.level in (1,2,3)
+                order by e.sq ASC
+    '''.format(
+        pid,
+        session.get('username')
+    )
+    try:
+        query = list( db.session.execute(sql) )
+    except Exception as e:
+        app.logger.exception(e)
+        raise
+    finally:
+        db.session.rollback()
+
+    if query:
+        menu_list = []
+        for q in query:
+            if not q in menu_list:
+                menu_list.append(q)
+
+        for k, v in enumerate(menu_list):
+            ul_start_html = ''
+            ul_end_html = ''
+
+            #非一级菜单，且只有一个子菜单
+            if level > 1 and len(menu_list) == 1:
+                ul_start_html = '<ul class="nav nav-{}-level collapse" aria-expanded="true" style="">'.format(class_level)
+                ul_end_html = '''
+                                </ul>
+                            </li>
+                '''
+            #非一级菜单，且是第一个子菜单
+            elif level > 1 and k==0:
+                ul_start_html = '<ul class="nav nav-{}-level collapse" aria-expanded="true" style="">'.format(class_level)
+                ul_end_html = ''
+
+            #非一级菜单，且是最后一个子菜单
+            elif level > 1 and k==(len(menu_list) -1):
+                ul_start_html = ''
+                ul_end_html = '''
+                                </ul>
+                            </li>    
+                '''
+            else:
+                pass
+
+            if level ==  1:
+                #一级菜单，且只有一个选项；
+                if v[2] != '#':
+                    menu_html = '''
+                        <li class="">
+                            <a class="J_menuItem" href="{}"><i class="fa {}"></i>
+                            <span class="nav-label">{}</span><span class="fa arrow"></span></a>
+                    '''.format(v[2], v[4], v[3])
+                else:
+                    menu_html = '''
+                        <li class="">
+                            <a href="{}"><i class="fa {}"></i>
+                            <span class="nav-label">{}</span><span class="fa arrow"></span></a>
+                    '''.format( v[2], v[4], v[3])
+            else:
+                menu_html = '''
+                    <li>
+                        <a class="J_menuItem" href="{}" data-index="{}"><i class="fa {}"></i>{}</a>
+                '''.format(v[2], v[0], v[4] or 'fa-toggle-right', v[3])
+
+            tree_html += ul_start_html + menu_html + get_tree_menu(v[0], level+1) + ul_end_html
+    elif level != 1:
+        tree_html += "</li>"
+    else:
+        pass
+    return tree_html

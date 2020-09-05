@@ -5,7 +5,7 @@
 from flask import make_response, render_template, jsonify, request, flash, session
 from . import article
 from app import db
-from app.models import Article
+from app.models import Article, Category
 from flask import current_app as app
 import datetime
 from app.funlib import *
@@ -60,5 +60,22 @@ def article_lists():
 
 @article.route('/create/', methods=['POST', 'GET'])
 def article_create():
+    # article category
+    category = Category.query.with_entities(Category.category_name).filter(Category.deleted_at == None, Category.valid == '1').all()
+    return render_template('article_create.html', category=category)
 
-    return render_template('article_create.html')
+
+
+@article.route('/getUeditorConfig/', methods=['GET'])
+def article_getUeditorConfig():
+
+    return make_response(jsonify({
+            "imageUrl": '',
+            "imagePath": "",
+            "imageFieldName": "upfile",
+            "imageMaxSize": 2048,
+            "imageAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"],
+            "其他配置项...": "其他配置值..."
+    }))
+
+

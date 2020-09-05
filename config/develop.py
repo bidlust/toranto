@@ -203,4 +203,12 @@ class Develop( Default ):
     RESPONSE_UNAUTH_MESSAGE = '您访问的资源需要授权！'
 
 
+    #Ueditor配置
+    IMAGE_UPLOAD_ACTION = ''
+    IMAGE_PATH = ''
+    IMAGE_FIELD_NAME = ''
+    IMAGE_MAX_SIZE = 2048
+
+
+
     pass

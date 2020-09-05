@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # by dongchao <cookie@maxcale.cn>
 
-from sqlalchemy import Column, Integer,SmallInteger, Text,Boolean, String, CHAR, DateTime
+from sqlalchemy import Column, Integer,SmallInteger, Text, Boolean, String, CHAR, DateTime, DECIMAL
 from sqlalchemy import UniqueConstraint, Index
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.sql import func
@@ -192,8 +192,12 @@ class  Article(db.Model):
     article_content = Column(Text, nullable=False)
     article_tag = Column(String(255), nullable=True)
     article_click = Column(Integer, nullable=False, server_default='1')
+    article_praise =  Column(Integer, nullable=False, server_default='2')
+    article_step = Column(Integer, nullable=False, server_default='1')
+    article_seo = Column(String(255), nullable=True)
     article_picture = Column(String(255), nullable=True)
     article_password = Column(String(255), nullable=True)
+    article_price = Column(DECIMAL(10,2), nullable=True)
     sq = Column(Integer, nullable=False, server_default='1')
     top = Column(Integer, nullable=False, server_default='1')
     iscomment = Column(CHAR(1), nullable=False, server_default='1')
@@ -287,4 +291,30 @@ class Industry(db.Model):
 
     def __init__(self, **kwargs):
         self.industry_name = kwargs.get('industry_name')
+
+
+class Share(db.Model):
+    __tablename__ = 'toranto_share'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    share_name = Column(String(255), nullable=False)
+    share_desc = Column(Text, nullable=True)
+    share_click = Column(Integer, default=1)
+    share_download = Column(Integer, default=1)
+    share_creator = Column(String(255), nullable=True)
+    share_type = Column(String(255), nullable=False, default='PDF')
+    share_location = Column(String(255), nullable=False, default='local')
+    share_link = Column(String(255), nullable=False)
+    share_password = Column(String(255), nullable=True)
+    share_price = Column(DECIMAL(10,2), nullable=True)
+    iscomment = Column(CHAR(1), nullable=False, server_default='1')
+    valid = Column(CHAR(1), nullable=False, server_default='1')
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(DateTime, nullable=True)
+
 

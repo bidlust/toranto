@@ -31,7 +31,7 @@
         </div>
         <div class="ibox-content">
              <p>
-                <button type="button" class="btn btn-w-m btn-primary B_menuItem" data-action="{{ url_for('article.article_create') }}" data-index="123456" data-title="hello">
+                <button type="button" class="btn btn-w-m btn-primary B_menuItem" data-action="{{ url_for('article.article_create') }}" data-index="{{ range(10000,50000) | random }}" data-title="新建文章">
                     <i class="fa fa-plus-square"></i>&nbsp;新增
                 </button>
                 &nbsp;&nbsp;
