@@ -2,14 +2,11 @@
 # by dongchao <cookie@maxcale.cn>
 
 
-from app import init_app
+from app import app
 from flask_script import Manager, Shell, Server
 from flask_migrate import Migrate, MigrateCommand
-import os
 from app.models import *
 
-envName = os.getenv('APP_ENV') or 'dev'
-app = init_app( envName )
 
 
 def make_shell_context():

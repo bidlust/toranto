@@ -11,6 +11,8 @@ class Develop( Default ):
     #设置开发模式；
     DEBUG = True
 
+    SERVER_DOMAMIN = 'http://127.0.0.1:5050/'
+
     #密钥
     SECRET_KEY = 'uHUk98@#$598ujkij987!@3ffuckgirl#$kjiu'
 
@@ -202,6 +204,17 @@ class Develop( Default ):
     RESPONSE_UNAUTH_CODE = 3
     RESPONSE_UNAUTH_MESSAGE = '您访问的资源需要授权！'
 
+    RESPONSE_UPLOAD_ERROR_CODE = 4
+    RESPONSE_UPLOAD_ERROR_MESSAGE = '服务端读取上传文件失败！'
+
+    RESPONSE_UPLOAD_NOT_ALLOW_CODE = 5
+    RESPONSE_UPLOAD_NOT_ALLOW_MESSAGE = '上传文件格式不符合要求！'
+
+    RESPONSE_SAVE_ERROR_CODE = 6
+    RESPONSE_SAVE_ERROR_MESSAGE = '服务端保存文件失败！'
+
+    RESPONSE_SAVE_SUCCESS = 7
+    RESPONSE_SAVE_SUCCESS_MESSAGE = '上传成功！'
 
     #Ueditor配置
     IMAGE_UPLOAD_ACTION = ''
@@ -209,6 +222,9 @@ class Develop( Default ):
     IMAGE_FIELD_NAME = ''
     IMAGE_MAX_SIZE = 2048
 
+    IMAGE_ALLOWED = ['.jpg', '.png', '.jpge', '.gif', '.bmp']
+    FILE_ALLOWED = ['.zip', '.tar', '.gz', '.pdf', 'tgz', '.jpg', '.png', '.jpge', '.gif', '.bmp', '.doc', 'docx', '.xls', '.xlsx', '.sql', '.rpm', '.txt', 'phar']
 
+    UPLOAD_PATH = "E:/toranto/upload"
 
     pass

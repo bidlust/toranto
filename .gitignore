@@ -13,6 +13,8 @@ venv/
 migrations/
 __pycache__/
 log/
+upload/
+
 
 # Distribution / packaging
 .Python

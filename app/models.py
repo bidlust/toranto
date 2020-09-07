@@ -236,6 +236,30 @@ class  Article(db.Model):
         self.date_expire         = kwargs.get('date_expire')
 
 
+class Attachment(db.Model):
+    __tablename__ = 'toranto_attachment'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id                  = Column(Integer, primary_key=True, autoincrement=True)
+    attach_article_title   = Column(String(255), nullable=False)
+    attach_name         = Column(String(255), nullable=False)
+    attach_saved        = Column(String(255), nullable=False)
+    attach_upload_path  = Column(String(255), nullable=False)
+    attach_type         = Column(String(255), nullable=False)
+    attach_size         = Column(Integer, default=0)
+    attach_visit        = Column(String(255), nullable=True)
+    attach_creator      = Column(String(255), nullable=True)
+    attach_password     = Column(String(255), nullable=True)
+    attach_price        = Column(DECIMAL(10,2), nullable=True)
+    valid               = Column(CHAR(1), nullable=False, server_default='0')
+    created_at          = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at          = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at          = Column(DateTime, nullable=True)
+
+
 class Category(db.Model):
     __tablename__ = 'toranto_category'
     __table_args__ = {
@@ -316,5 +340,29 @@ class Share(db.Model):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     deleted_at = Column(DateTime, nullable=True)
+
+
+class Uploadfile(db.Model):
+    __tablename__ = 'toranto_upload'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    upload_name     = Column(String(255), nullable=False)
+    upload_path     = Column(String(255), nullable=False)
+    upload_type     = Column(String(255), nullable=False)
+    upload_size     = Column(Integer, default=0)
+    upload_busi     = Column(String(255), nullable=True)
+    upload_real     = Column(String(255), nullable=True)
+    upload_saved    = Column(String(255), nullable=True)
+    upload_visit    = Column(String(255), nullable=True)
+    upload_creator  = Column(String(255), nullable=True)
+    valid           = Column(CHAR(1), nullable=False, server_default='1')
+    created_at      = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at      = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at      = Column(DateTime, nullable=True)
+
 
 
