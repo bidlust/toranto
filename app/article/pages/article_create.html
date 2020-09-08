@@ -47,7 +47,7 @@
 						<select class="selectpicker" data-style="btn-primary" data-live-search="true" name="article_category" id="article_category">
 							<option value="">请选择文章分类</option>
 							{% for cat in category: %}
-						  	<option>{{ cat[0] }}</option>
+						  	<option {% if cat[0] == article_obj.article_category: %}  selected="selected" {% endif %}  value="{{ cat[0] }}"> {{ cat[0] }} </option>
 							{% endfor %}
 						</select>
 						<a href="#"  data-toggle="modal" data-target="#categoryModal" >新增分类</a>
@@ -57,21 +57,21 @@
 				<div class="form-group">
 					<label class="col-sm-1 control-label">标题:</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" placeholder="请输入文章标题" name="article_title" id="article_title" autocomplete="off">
+						<input type="text" class="form-control" placeholder="请输入文章标题"  value="{{article_obj.article_title}}" name="article_title" id="article_title" autocomplete="off">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">SEO段标记:</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" name="article_seo" id="article_seo" placeholder="请使用英文单词和中划线" autocomplete="off">
+						<input type="text" class="form-control" name="article_seo" id="article_seo" placeholder="请使用英文单词和中划线" value="{{article_obj.article_seo}}" autocomplete="off">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">作者：</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" id="article_author" name="article_author" placeholder="请输入作者名称" autocomplete="off" value="{{ session.get('username') }}">
+						<input type="text" class="form-control" id="article_author" name="article_author" placeholder="请输入作者名称"  value="{{article_obj.article_author}}" autocomplete="off" value="{{ session.get('username') }}">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
@@ -79,7 +79,7 @@
 					<label class="col-sm-1 control-label">有效期:</label>
 
 					<div class="col-sm-10">
-						<input class="form-control layer-date" value="" name="date_expire" id="date_expire" placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+						<input class="form-control layer-date" value="" name="date_expire" id="date_expire"  value="{{article_obj.date_expire}}" placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
 						<label class="laydate-icon"></label>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
 					<label class="col-sm-1 control-label">文章描述:</label>
 
 					<div class="col-sm-10">
-						<textarea class="form-control" rows="4" style="rezise"  id="article_desc" name="article_desc"></textarea>
+						<textarea class="form-control" rows="4" style="rezise"  id="article_desc"   name="article_desc">{{article_obj.article_desc}}</textarea>
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
@@ -106,56 +106,58 @@
 
 					<div class="col-sm-10">
 						<!-- 加载编辑器的容器 -->
-						<script id="article_content" name="article_content" type="text/plain">请填写文章内容...</script>
+						<div id="ueditorContainer">
+							<script id="article_content" name="article_content" type="text/plain"></script>
+						</div>
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">标签：</label>
 					<div class="col-sm-10">
-						<input type="text" placeholder="请使用逗号分隔" name="article_tag"  id="article_tag" class="form-control" autocomplete="off">
+						<input type="text" placeholder="请使用逗号分隔" name="article_tag"  id="article_tag" class="form-control" value="{{ article_obj.article_tag}}" autocomplete="off">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">浏览量：</label>
 					<div class="col-sm-2">
-						<input type="text" placeholder="" class="form-control" name="article_click" id="article_click">
+						<input type="text" placeholder="" class="form-control" name="article_click" value="{{ article_obj.article_click}}" id="article_click">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">排序：</label>
 					<div class="col-sm-2">
-						<input type="text" placeholder="" class="form-control" name="article_sq" id="article_sq">
+						<input type="text" placeholder="" class="form-control" value="{{ article_obj.article_sq}}" name="article_sq" id="article_sq">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">密码保护：</label>
 					<div class="col-sm-2">
-						<input type="text" placeholder="" name="article_password" class="form-control" id="article_password">
+						<input type="text" placeholder="" name="article_password" value="{{ article_obj.pwd}}" class="form-control" id="article_password">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">收费金额：</label>
 					<div class="col-sm-2">
-						<input type="text" placeholder="" name="article_price" id="article_price" class="form-control">
+						<input type="text" placeholder="" name="article_price" id="article_price" value="{{ article_obj.article_price}}" class="form-control">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">点赞数：</label>
 					<div class="col-sm-2">
-						<input type="text" placeholder="" name="article_praise" id="article_praise" class="form-control">
+						<input type="text" placeholder="" name="article_praise" id="article_praise" value="{{ article_obj.article_praise}}" class="form-control">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">踩点数：</label>
 					<div class="col-sm-2">
-						<input type="text" placeholder="" name="article_step" id="article_step" class="form-control">
+						<input type="text" placeholder="" name="article_step" id="article_step" value="{{ article_obj.article_step}}" class="form-control">
 					</div>
 				</div>
 				<div class="hr-line-dashed"></div>
@@ -163,10 +165,10 @@
 					<label class="col-sm-1 control-label">是否置顶：</label>
 					<div class="col-sm-2">
 						<label class="radio-inline">
-						  <input type="radio" name="top" value="1"> 是
+						  <input type="radio" name="top" value="1" {% if article_obj.top == 1 : %} checked {% endif %} > 是
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="top" value="0" checked> 否
+						  <input type="radio" name="top" value="0"  {% if article_obj.top == 0 : %} checked {% endif %}> 否
 						</label>
 					</div>
 				</div>
@@ -175,10 +177,10 @@
 					<label class="col-sm-1 control-label">允许评论：</label>
 					<div class="col-sm-2">
 						<label class="radio-inline">
-						  <input type="radio" name="iscomment" value="1" checked> 是
+						  <input type="radio" name="iscomment" value="1" {% if article_obj.iscomment == '1' : %} checked {% endif %}> 是
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="iscomment" value="0" > 否
+						  <input type="radio" name="iscomment" value="0" {% if article_obj.iscomment == '0' : %} checked {% endif %} > 否
 						</label>
 					</div>
 				</div>
@@ -187,10 +189,10 @@
 					<label class="col-sm-1 control-label">是否隐藏：</label>
 					<div class="col-sm-2">
 						<label class="radio-inline">
-						  <input type="radio" name="isvisible" value="1" > 是
+						  <input type="radio" name="isvisible" value="1" {% if article_obj.isvisible == '0' : %} checked {% endif %} > 是
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="isvisible" value="0" checked> 否
+						  <input type="radio" name="isvisible" value="0" {% if article_obj.isvisible == '1' : %} checked {% endif %}> 否
 						</label>
 					</div>
 				</div>
@@ -199,10 +201,10 @@
 					<label class="col-sm-1 control-label">工具栏：</label>
 					<div class="col-sm-2">
 						<label class="radio-inline">
-						  <input type="radio" name="istoolbar" value="1" > 显示
+						  <input type="radio" name="istoolbar" value="1"  {% if article_obj.istoolbar == '1' : %} checked {% endif %} > 显示
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="istoolbar" value="0" checked> 不显示
+						  <input type="radio" name="istoolbar" value="0"  {% if article_obj.istoolbar == '0' : %} checked {% endif %}> 不显示
 						</label>
 					</div>
 				</div>
@@ -274,6 +276,9 @@ var ue = UE.getEditor('article_content', {
 	serverUrl : '/action/ueditor/',
 	lang : 'zh-cn'
 });
+var usHtml = '{{ article_obj.article_content }}';
+var ue = UE.getEditor('article_content');
+ue.setContent(usHtml);
 
 $("#categoryForm").validate({
 	rules: {
@@ -283,7 +288,6 @@ $("#categoryForm").validate({
 		category_name : "请输入分类名称",
 	}
 })
-
 
 
 $("#articleDataForm").validate({

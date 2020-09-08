@@ -221,9 +221,19 @@ def zip_dict(title, contents):
     zipped_list = []
     for content in contents:
         if len(title) != len(content):
-            return Exception("[Error] - title and content length not equals!")
+            raise Exception("[Error] - title and content length not equals!")
         zipped_list.append( { k:v for (k,v) in zip(title, content) } )
     return zipped_list
+
+def zip_one_dict(title, content):
+    if not isinstance(title, list):
+        raise Exception("[Error] - title must be list!")
+    if not isinstance(content, list):
+        raise Exception("[Error] - content must be list!")
+    if len(title) != len(content):
+        raise Exception("[Error] - title and content length not equals!")
+    return { k:v for (k,v) in zip(title, content) }
+
 
 
 def get_page_name():

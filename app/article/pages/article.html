@@ -192,8 +192,8 @@ var TableInit = function () {
                     },
                     formatter: function (value, row, index) {
                         var result = "";
-                        result += '<button class=" editBtn btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">编辑</button>';
-                        result += '<button class=" deleteBtn btn btn-danger btn-sm" style="margin-left:10px;">删除</button>';
+                        result += '<button data-action="{{ url_for('article.article_create') }}?aid=' + row.id + '" data-index="' + row.id + '" data-title="编辑文章" class="B_menuItem btn btn-primary btn-sm">编辑</button>';
+                        result += '<button class="deleteBtn btn btn-danger btn-sm" style="margin-left:10px;">删除</button>';
                         return result;
                     }
                 }

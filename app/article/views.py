@@ -37,6 +37,7 @@ def article_lists():
             params.append(Article.article_author==session.get('username'))
 
         pagination = db.session.query(
+            Article.id,
             Article.article_title,
             func.date_format( Article.created_at, "%Y-%m-%d %H:%m:%S"),
             Article.article_author,
@@ -52,7 +53,7 @@ def article_lists():
 
         total = pagination.total
         items = pagination.items
-        title = ['title', 'created', 'author', 'click', 'top', 'iscomment', 'ispublish', 'isvisible', 'ispassword']
+        title = ['id','title', 'created', 'author', 'click', 'top', 'iscomment', 'ispublish', 'isvisible', 'ispassword']
         return make_response(jsonify({"code" : 0, "rows": zip_dict(title, list( items ) ) , "total":total}))
 
     return render_template('article.html')
@@ -148,7 +149,38 @@ def article_create():
 
     # article category
     category = Category.query.with_entities(Category.category_name).filter(Category.deleted_at == None, Category.valid == '1').all()
-    return render_template('article_create.html', category=category)
+
+    #编辑；
+    aid = request.args.get('aid')
+    article_obj = None
+    if aid:
+        article_obj = db.session.query(
+            Article.id,
+            Article.article_title,
+            Article.article_category,
+            Article.article_seo,
+            Article.article_author,
+            Article.date_expire,
+            Article.article_picture,
+            Article.article_desc,
+            Article.article_content,
+            Article.article_tag,
+            Article.article_click,
+            Article.sq,
+            Pwdmap.pwd,
+            Article.article_price,
+            Article.article_praise,
+            Article.article_step,
+            Article.top,
+            Article.iscomment,
+            Article.isvisible,
+            Article.istoolbar
+        ).outerjoin(
+            Pwdmap,
+            Pwdmap.title==Article.article_title
+        ).filter(Article.id==aid).first()
+        db.session.commit()
+    return render_template('article_create.html', category=category, article_obj=article_obj)
 
 
 
