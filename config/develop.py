@@ -223,8 +223,59 @@ class Develop( Default ):
     IMAGE_MAX_SIZE = 2048
 
     IMAGE_ALLOWED = ['.jpg', '.png', '.jpge', '.gif', '.bmp']
+
     FILE_ALLOWED = ['.zip', '.tar', '.gz', '.pdf', 'tgz', '.jpg', '.png', '.jpge', '.gif', '.bmp', '.doc', 'docx', '.xls', '.xlsx', '.sql', '.rpm', '.txt', 'phar']
 
     UPLOAD_PATH = "E:/toranto/upload"
+
+
+    #article setting
+    ARTICLE_PICTURE = None
+
+    ARTICLE_CLICK = 10
+
+    ARTICLE_SQ = 1
+
+    ARTICLE_IS_TOP = '0'
+
+    ARTICLE_IS_COMMENT = '1'
+
+    ARTICLE_IS_TOOLBAR = '1'
+
+    ARTICLE_PRAISE = 10
+
+    ARTICLE_STEP = 9
+
+    ARTICLE_PRICE = 99
+
+    ARTICLE_PASSWORD = None
+
+    ARTICLE_DESC = None
+
+    ARTICLE_TAG = None
+
+    ARTICLE_IS_VISIBLE = '1'
+
+    ARTICLE_CATEGORY = 'Default'
+
+    ARTICLE_SEO = 'make-you-fit'
+
+    ARTICLE_AUTHOR = 'admin'
+
+    ARTICLE_EXPIRE_DATE = '2100-01-01 00:00:00'
+
+    ARTICLE_CONTENT = None
+
+    ARTICLE_TITLE = None
+
+    ARTICLE_IS_PUBLISH = '1'
+
+    ARTICLE_ADD_SUCCESS_CODE = 8
+
+    ARTICLE_ADD_SUCCESS_MESSAGE = '文章内容已提交成功！'
+
+    ARTICLE_ADD_ERROR_CODE = 9
+
+    ARTICLE_ADD_ERROR_MESSAGE = '文章提交失败！'
 
     pass

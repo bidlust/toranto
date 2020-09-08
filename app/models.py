@@ -185,7 +185,7 @@ class  Article(db.Model):
     }
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    article_category = Column(Integer, nullable=True)
+    article_category = Column(String(255), nullable=True)
     article_title = Column(String(255), nullable=False)
     article_author = Column(String(255), nullable=False)
     article_desc = Column(Text, nullable=True)
@@ -210,30 +210,7 @@ class  Article(db.Model):
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     deleted_at = Column(DateTime, nullable=True)
 
-    @property
-    def password(self):
-        raise AttributeError("Password is not a readable attribute")
 
-    @password.setter
-    def password(self, password):
-        self.article_password = generate_password_hash(password)
-
-    def __init__(self, **kwargs):
-        self.article_category    = kwargs.get('article_category')
-        self.article_title       = kwargs.get('article_title')
-        self.article_author      = kwargs.get('article_author')
-        self.article_desc        = kwargs.get('article_desc')
-        self.article_content     = kwargs.get('article_content')
-        self.article_tag         = kwargs.get('article_tag')
-        self.article_click       = kwargs.get('article_click')
-        self.article_picture     = kwargs.get('article_picture')
-        self.sq                  = kwargs.get('sq')
-        self.iscomment           = kwargs.get('iscomment')
-        self.top                 = kwargs.get('top')
-        self.ispublish           = kwargs.get('ispublish')
-        self.isvisible           = kwargs.get('isvisible')
-        self.istoolbar           = kwargs.get('istoolbar')
-        self.date_expire         = kwargs.get('date_expire')
 
 
 class Attachment(db.Model):
@@ -350,7 +327,7 @@ class Uploadfile(db.Model):
         'mysql_collate': 'utf8mb4_unicode_ci'
     }
     id = Column(Integer, primary_key=True, autoincrement=True)
-    upload_name     = Column(String(255), nullable=False)
+    upload_name     =  Column(String(255), nullable=False)
     upload_path     = Column(String(255), nullable=False)
     upload_type     = Column(String(255), nullable=False)
     upload_size     = Column(Integer, default=0)
@@ -364,5 +341,20 @@ class Uploadfile(db.Model):
     updated_at      = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     deleted_at      = Column(DateTime, nullable=True)
 
+
+class Pwdmap(db.Model):
+    __tablename__ = 'toranto_pwdmap'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String(255), nullable=False)
+    pwd = Column(String(255), nullable=False)
+    valid = Column(CHAR(1), nullable=False, server_default='1')
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(DateTime, nullable=True)
 
 
