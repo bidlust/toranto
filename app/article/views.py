@@ -25,10 +25,14 @@ def article_lists():
             pageNumber = 1
 
         params = []
+        params.append(Article.deleted_at == None)
+        params.append(Article.valid == '1')
+        '''
         params.append(Article.isvisible == '1')
         params.append(Article.ispublish == '1')
         params.append(Article.valid == '1')
         params.append(db.cast( Article.date_expire, db.Date) > db.cast(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), db.Date))
+        '''
 
         article_title = request.form.get('article_title')
         if article_title:
@@ -39,6 +43,7 @@ def article_lists():
         pagination = db.session.query(
             Article.id,
             Article.article_title,
+            Article.article_category,
             func.date_format( Article.created_at, "%Y-%m-%d %H:%m:%S"),
             Article.article_author,
             Article.article_click,
@@ -48,12 +53,12 @@ def article_lists():
             Article.isvisible,
             Article.article_password
         ).filter(*params)\
-            .order_by(Article.top.desc(), Article.sq.desc())\
+            .order_by(Article.created_at.desc())\
             .paginate(pageNumber, per_page=pageSize, error_out=True)
 
         total = pagination.total
         items = pagination.items
-        title = ['id','title', 'created', 'author', 'click', 'top', 'iscomment', 'ispublish', 'isvisible', 'ispassword']
+        title = ['id','title','category', 'created', 'author', 'click', 'top', 'iscomment', 'ispublish', 'isvisible', 'ispassword']
         return make_response(jsonify({"code" : 0, "rows": zip_dict(title, list( items ) ) , "total":total}))
 
     return render_template('article.html')
@@ -62,8 +67,9 @@ def article_lists():
 @article.route('/create/', methods=['POST', 'GET'])
 def article_create():
     if request.method == 'POST':
-        ispublish = request.form.get('action') or app.config.get('ARTICLE_IS_PUBLISH')
-        isvisible = request.form.get('isvisible') or app.config.get('ARTICLE_IS_VISIBLE')
+        id = request.form.get('id')
+        ispublish = request.form.get('action')
+        isvisible = request.form.get('isvisible')
         category = request.form.get('article_category') or app.config.get('ARTICLE_CATEGORY')
         title = request.form.get('article_title') or app.config.get('ARTICLE_TITLE')
         seo = request.form.get('article_seo') or app.config.get('ARTICLE_SEO')
@@ -75,11 +81,11 @@ def article_create():
         tags = request.form.get('article_tag') or app.config.get('ARTICLE_TAG')
         click = request.form.get('article_click') or app.config.get('ARTICLE_CLICK')
         sq = request.form.get('article_sq') or app.config.get('ARTICLE_SQ')
-        top = request.form.get('top') or app.config.get('ARTICLE_IS_TOP')
-        iscomment = request.form.get('iscomment') or app.config.get('ARTICLE_IS_COMMENT')
-        istoolbar = request.form.get('istoolbar') or app.config.get('ARTICLE_IS_TOOLBAR')
-        password = request.form.get('article_password') or app.config.get('ARTICLE_PASSWORD')
-        price = request.form.get('article_price') or app.config.get('ARTICLE_PRICE')
+        top = request.form.get('top')
+        iscomment = request.form.get('iscomment')
+        istoolbar = request.form.get('istoolbar')
+        password = request.form.get('article_password')
+        price = request.form.get('article_price')
         praise = request.form.get('article_praise') or app.config.get('ARTICLE_PRAISE')
         step = request.form.get('article_step') or app.config.get('ARTICLE_STEP')
 
@@ -99,52 +105,94 @@ def article_create():
                 "message": "请输入文章作者！"
             }))
 
-        article = Article(
-            article_category    =category,
-            article_title       =title,
-            article_author      =author,
-            article_desc        =desc,
-            article_content     =content,
-            article_tag         =tags,
-            article_click       =click,
-            article_praise      =praise,
-            article_step        =step,
-            article_seo         =seo,
-            article_picture     =picture,
-            article_password    = generate_password_hash( password ),
-            article_price       =price,
-            sq                  =sq,
-            top                 =top,
-            iscomment           =iscomment,
-            ispublish           =ispublish,
-            isvisible           =isvisible,
-            istoolbar           =istoolbar,
-            date_expire         =date_expire
-        )
-        article_mp = None
-        if password:
-            article_mp = Pwdmap(title=title, pwd=password)
+        #编辑
+        if id:
+            try:
+                update_rst = db.session.query(Article).filter(Article.id==id).update({
+                    'isvisible'         : isvisible,
+                    'article_category'  : category if category else None ,
+                    'article_title'     : title,
+                    'article_author'    : author if author else None,
+                    'article_desc'      : desc if desc else None,
+                    'article_content'   : content if content else None,
+                    'article_tag'       : tags if tags else None,
+                    'article_click'     : click if click else None,
+                    'article_picture'   : picture if picture else None ,
+                    'sq'                : sq if sq else None,
+                    'top'               : top,
+                    'iscomment'         :    iscomment,
+                    'ispublish'         : ispublish,
+                    'istoolbar'         :   istoolbar,
+                    'date_expire'       : date_expire,
+                    'article_password'  : generate_password_hash( password ) if password else None,
+                    'article_price'     : price if price else None,
+                    'article_praise'    : praise if praise else 1,
+                    'article_seo'       : seo if seo else None,
+                    'article_step'      : step if step else 1
+                })
 
-        try:
-            db.session.add(article)
-            if article_mp:
-                db.session.add(article_mp)
-            db.session.commit()
-            return make_response(jsonify({
-                "code": app.config.get('ARTICLE_ADD_SUCCESS_CODE'),
-                "message": app.config.get('ARTICLE_ADD_SUCCESS_MESSAGE')
-            }))
+                db.session.query(Pwdmap).filter(Pwdmap.title==title).update({'pwd': password or None})
+                db.session.commit()
+                return make_response(jsonify({
+                    "code": app.config.get('ARTICLE_EDIT_SUCCESS_CODE'),
+                    "message": app.config.get('ARTICLE_EDIT_SUCCESS_MESSAGE')
+                }))
+            except Exception as e:
+                app.logger.exception(e)
+                db.session.rollback()
+                return make_response(jsonify({
+                    "code": app.config.get('ARTICLE_EDIT_ERROR_CODE'),
+                    "message": app.config.get('ARTICLE_EDIT_ERROR_MESSAGE')
+                }))
+            finally:
+                pass
 
-        except Exception as e:
-            app.logger.exception(e)
-            db.session.rollback()
-            return make_response(jsonify({
-                "code": app.config.get('ARTICLE_ADD_ERROR_CODE'),
-                "message": app.config.get('ARTICLE_ADD_ERROR_MESSAGE')
-            }))
+        else:
+            article = Article(
+                article_category    =category,
+                article_title       =title,
+                article_author      =author,
+                article_desc        =desc,
+                article_content     =content,
+                article_tag         =tags,
+                article_click       =click,
+                article_praise      =praise,
+                article_step        =step,
+                article_seo         =seo,
+                article_picture     =picture,
+                article_password    = generate_password_hash( password ),
+                article_price       =price,
+                sq                  =sq,
+                top                 =top,
+                iscomment           =iscomment,
+                ispublish           =ispublish,
+                isvisible           =isvisible,
+                istoolbar           =istoolbar,
+                date_expire         =date_expire
+            )
+            article_mp = None
+            if password:
+                article_mp = Pwdmap(title=title, pwd=password)
 
-        finally:
-            pass
+            try:
+                db.session.add(article)
+                if article_mp:
+                    db.session.add(article_mp)
+                db.session.commit()
+                return make_response(jsonify({
+                    "code": app.config.get('ARTICLE_ADD_SUCCESS_CODE'),
+                    "message": app.config.get('ARTICLE_ADD_SUCCESS_MESSAGE')
+                }))
+
+            except Exception as e:
+                app.logger.exception(e)
+                db.session.rollback()
+                return make_response(jsonify({
+                    "code": app.config.get('ARTICLE_ADD_ERROR_CODE'),
+                    "message": app.config.get('ARTICLE_ADD_ERROR_MESSAGE')
+                }))
+            finally:
+                pass
 
 
     # article category
@@ -194,3 +242,26 @@ def article_getUeditorConfig():
             "imageMaxSize": 2048,
             "imageAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"],
     }))
+
+
+@article.route('/delete/', methods=['GET'])
+def article_delete():
+    id = request.args.get('id')
+    try:
+        db.session.query(Article).filter(Article.id==id).update({
+            "deleted_at" : datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+        db.session.commit()
+        return make_response(jsonify({
+            "code": app.config.get('ARTICLE_DELETE_SUCCESS_CODE'),
+            "message": app.config.get('ARTICLE_DELETE_SUCCESS_MESSAGE')
+        }))
+    except Exception as e:
+        app.logger.exception(e)
+        db.session.rollback()
+        return make_response(jsonify({
+            "code": app.config.get('ARTICLE_DELETE_ERROR_CODE'),
+            "message": app.config.get('ARTICLE_DELETE_ERROR_MESSAGE')
+        }))
+    finally:
+        pass

@@ -232,7 +232,7 @@ class Develop( Default ):
     #article setting
     ARTICLE_PICTURE = None
 
-    ARTICLE_CLICK = 10
+    ARTICLE_CLICK = 1
 
     ARTICLE_SQ = 1
 
@@ -242,9 +242,9 @@ class Develop( Default ):
 
     ARTICLE_IS_TOOLBAR = '1'
 
-    ARTICLE_PRAISE = 10
+    ARTICLE_PRAISE = 1
 
-    ARTICLE_STEP = 9
+    ARTICLE_STEP = 1
 
     ARTICLE_PRICE = 99
 
@@ -277,5 +277,21 @@ class Develop( Default ):
     ARTICLE_ADD_ERROR_CODE = 9
 
     ARTICLE_ADD_ERROR_MESSAGE = '文章提交失败！'
+
+    ARTICLE_EDIT_SUCCESS_CODE = 10
+
+    ARTICLE_EDIT_SUCCESS_MESSAGE = '文章编辑成功！'
+
+    ARTICLE_EDIT_ERROR_CODE = 11
+
+    ARTICLE_EDIT_ERROR_MESSAGE = '文章编辑失败！'
+
+    ARTICLE_DELETE_SUCCESS_CODE = 12
+
+    ARTICLE_DELETE_SUCCESS_MESSAGE = '文章删除成功！'
+
+    ARTICLE_DELETE_ERROR_CODE = 13
+
+    ARTICLE_DELETE_ERROR_MESSAGE = '文章删除失败！'
 
     pass

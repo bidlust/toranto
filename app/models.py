@@ -351,7 +351,7 @@ class Pwdmap(db.Model):
     }
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(255), nullable=False)
-    pwd = Column(String(255), nullable=False)
+    pwd = Column(String(255), nullable=True)
     valid = Column(CHAR(1), nullable=False, server_default='1')
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
