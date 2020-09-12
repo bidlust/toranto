@@ -358,3 +358,22 @@ class Pwdmap(db.Model):
     deleted_at = Column(DateTime, nullable=True)
 
 
+class VisitHistory(db.Model):
+    __tablename__ = 'toranto_visit'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    visit_from      =  Column(String(255), nullable=False, server_default='admin_web')
+    visit_user      =  Column(String(255), nullable=True)
+    visit_path      =  Column(String(255), nullable=False)
+    visit_name      =  Column(String(255), nullable=True)
+    visit_ip        =  Column(String(255), nullable=True)
+    visit_get_args  =  Column(Text, nullable=True)
+    visit_post_args =  Column(Text, nullable=True)
+    valid           = Column(CHAR(1), nullable=False, server_default='1')
+    created_at      = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at      = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at      = Column(DateTime, nullable=True)
