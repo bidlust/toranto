@@ -6,7 +6,7 @@
 <div class="col-sm-12">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>友情链接
+            <h5>导航管理
                 <small>基本设置</small>
             </h5>
             <div class="ibox-tools">
@@ -31,7 +31,7 @@
         </div>
         <div class="ibox-content">
             <p>
-                <button type="button" class="btn btn-w-m btn-primary B_menuItem" data-action="/article/create/" data-index="28281" data-title="新建文章">
+                <button type="button" class="btn btn-w-m btn-primary" data-toggle="modal" data-target="#dataModal">
                     <i class="fa fa-plus-square"></i>&nbsp;新增
                 </button>
                 <button type="button" class="btn btn-w-m btn-warning refreshButton">
@@ -44,6 +44,73 @@
 </div>
 
 
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">新建文章分类</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" onsubmit="return false" id="dataForm">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">导航名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" required autocomplete="off" name="navigate_name">
+                        </div>
+				    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">icon:</label>
+                        <div class="col-sm-8">
+                            <input id="navigate_icon" class="form-control" name="navigate_icon" type="text">
+                        </div>
+				    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">URL:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" required autocomplete="off" name="navigate_url">
+                        </div>
+				    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tag:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" autocomplete="off" name="navigate_tag">
+                        </div>
+				    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">排序:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" autocomplete="off" name="sq">
+                        </div>
+				    </div>
+                    <div class="hr-line-dashed"></div>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">是否有效：</label>
+                        <div class="col-sm-8">
+                            <label class="radio-inline">
+                              <input type="radio" name="valid" value="1" checked> 是
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="valid" value="0" > 否
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="dataSubmit">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
 <script>
 
 window.operateEvents = {
@@ -52,7 +119,7 @@ window.operateEvents = {
 		btn: ['确定', '取消']
 	    }, function () {
 		// 按钮1的事件
-		$.get("{{url_for('link.link_delete')}}?id=" + row.id, function(response){
+		$.get("{{url_for('navigate.navigate_delete')}}?id=" + row.id, function(response){
 		    $("#dataTable").bootstrapTable('refresh');
 		    layer.alert(response.message);
 		})
@@ -65,7 +132,7 @@ window.operateEvents = {
 		btn: ['确定', '取消']
 	    }, function () {
 		// 按钮1的事件
-		$.get("{{url_for('link.link_invalid')}}?id=" + row.id, function(response){
+		$.get("{{url_for('navigate.navigate_invalid')}}?id=" + row.id, function(response){
 		    $("#dataTable").bootstrapTable('refresh');
 		    layer.alert(response.message);
 		})
@@ -78,7 +145,7 @@ window.operateEvents = {
 		btn: ['确定', '取消']
 	    }, function () {
 		// 按钮1的事件
-		$.get("{{url_for('link.link_valid')}}?id=" + row.id, function(response){
+		$.get("{{url_for('navigate.navigate_valid')}}?id=" + row.id, function(response){
 		    $("#dataTable").bootstrapTable('refresh');
 		    layer.alert(response.message);
 		})
@@ -108,11 +175,11 @@ $(function () {
         }
     })
 
-    $("#categorySubmit").click(function(){
-        if( $("#categoryForm").valid() ){
-            let fd = new FormData(document.getElementById("categoryForm"));
+    $("#dataSubmit").click(function(){
+        if( $("#dataForm").valid() ){
+            let fd = new FormData(document.getElementById("dataForm"));
             $.ajax({
-              url: "{{ url_for('category.category_add') }}",
+              url: "{{ url_for('navigate.navigate_add') }}",
               type: "POST",
               data: fd,
               processData: false,  // 不处理数据
@@ -120,8 +187,8 @@ $(function () {
               success: function(response){
                 layer.alert(response.message);
                 if(response.code == 0){
-                    $('#categoryForm')[0].reset()
-                    $('#categoryModal').modal('hide');
+                    $('#dataForm')[0].reset()
+                    $('#dataModal').modal('hide');
                     $("#dataTable").bootstrapTable('refresh');
                 }
               }
@@ -136,7 +203,7 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#dataTable').bootstrapTable({
-            url: "{{ url_for('link.link_lists') }}",         //请求后台的URL（*）
+            url: "{{ url_for('navigate.navigate_lists') }}",         //请求后台的URL（*）
             method: 'post',                      //请求方式（*）
             dataType: 'json',
             theadClasses:'.thead-light',
@@ -174,21 +241,20 @@ var TableInit = function () {
                     width: 50
                 },
                  {
-                    field: 'link_name',
+                    field: 'navigate_name',
                     title: '名称',
                 },{
-                    field: 'link_href',
+                    field: 'navigate_url',
                     title: '链接地址',
+                },{
+                    field: 'navigate_tag',
+                    title: '标签',
                 }, {
-                    field: 'link_desc',
-                    title: '描述',
-                    width: 300
+                    field: 'navigate_icon',
+                    title: 'icon',
                 },  {
-                    field: 'link_creator',
-                    title: '提交人',
-                }, {
-                    field: 'link_field',
-                    title: '行业背景',
+                    field: 'sq',
+                    title: '排序',
                 }, {
                     field: 'valid',
                     title: '是否有效',
@@ -251,5 +317,7 @@ var ButtonInit = function () {
 
     return oInit;
 };
+
+
 </script>
 {% endblock %}

@@ -31,7 +31,7 @@
         </div>
         <div class="ibox-content">
             <p>
-                <button type="button" class="btn btn-w-m btn-primary" data-toggle="modal" data-target="#categoryModal">
+                <button type="button" class="btn btn-w-m btn-primary" data-toggle="modal" data-target="#dataModal">
                     <i class="fa fa-plus-square"></i>&nbsp;新增
                 </button>
                 &nbsp;&nbsp;
@@ -46,7 +46,7 @@
 
 
 <!-- 模态框（Modal） -->
-<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -167,7 +167,7 @@ $(function () {
                 layer.alert(response.message);
                 if(response.code == 0){
                     $('#categoryForm')[0].reset()
-                    $('#categoryModal').modal('hide');
+                    $('#dataModal').modal('hide');
                     $("#dataTable").bootstrapTable('refresh');
                 }
               }

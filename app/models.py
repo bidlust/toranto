@@ -377,3 +377,47 @@ class VisitHistory(db.Model):
     created_at      = Column(DateTime, nullable=False, server_default=func.now())
     updated_at      = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     deleted_at      = Column(DateTime, nullable=True)
+
+
+class Comment(db.Model):
+    __tablename__ = 'toranto_comment'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    comment_type = Column(String(255), nullable=False, server_default='comment')
+    comment_article_title = Column(String(255), nullable=False)
+    comment_parent =  Column(Integer, default=0)
+    comment_username = Column(String(255), nullable=False)
+    comment_email = Column(String(255), nullable=False)
+    comment_url = Column(String(255), nullable=True)
+    comment_content = Column(Text, nullable=False)
+    comment_ip = Column(String(255), nullable=True)
+    valid = Column(CHAR(1), nullable=False, server_default='0')
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(DateTime, nullable=True)
+
+
+
+class Navigate(db.Model):
+    __tablename__ = 'toranto_navigate'
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_unicode_ci'
+    }
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    navigate_name = Column(String(255), nullable=False)
+    navigate_icon = Column(String(255), nullable=False)
+    navigate_url = Column(String(255), nullable=False)
+    navigate_tag = Column(String(255), nullable=True)
+    navigate_creator = Column(String(255), nullable=False)
+    sq = Column(Integer, nullable=False, server_default='1')
+    valid = Column(CHAR(1), nullable=False, server_default='0')
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(DateTime, nullable=True)
+

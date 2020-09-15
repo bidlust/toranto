@@ -3,9 +3,9 @@
 
 from app import app,db, csrf
 from flask import  session, request, make_response, flash, redirect, render_template, jsonify
-from .funlib import  get_user_ip, login_required, get_tree_menu
-from .models import User, LoginHistory
-
+from .funlib import  get_user_ip, login_required, get_tree_menu, get_random
+from .models import User, LoginHistory, TorantoSetting
+from sqlalchemy import desc
 
 @app.route('/login', methods=['GET', 'POST'])
 @csrf.exempt
@@ -70,13 +70,23 @@ def main_page():
             raise Exception("Error! user role unknown!")
         session['role'] = [ x[0] for x in query ]
 
-    return render_template('index.html', menu=get_tree_menu())
+    return render_template('main.html', menu=get_tree_menu())
 
 @app.route('/')
 def app_index():
+    #setting = db.session.query(TorantoSetting).order_by(desc(TorantoSetting.created_at)).first()
+
+    setting = TorantoSetting.query.order_by(desc(TorantoSetting.created_at)).first()
+
+    return make_response(render_template('index.html', setting=setting, random=get_random()))
+
+
+@app.route('/admin')
+def app_admin():
     if request.args.get('next'):
         session['next'] = request.args.get('next')
     return make_response(redirect('main'))
+
 
 #jinji2
 @app.template_filter('strftime')
