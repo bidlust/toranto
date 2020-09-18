@@ -2,12 +2,13 @@
 
 {% block content %}
 
+{% for article in articles %}
  <article class="article">
     <div class="article__info">
       <div class="article__info--left">
         <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
           <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
+          <span class="author__name">{{ article.author }}</span>
         </a>
         <span class="split">in</span>
         <span class="tags">
@@ -40,5 +41,5 @@
       <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2020/05/28/1590670559059.html">阅读全文</a>
     </div>
   </article>
-
+{% endfor %}
 {% endblock %}

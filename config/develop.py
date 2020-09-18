@@ -294,4 +294,9 @@ class Develop( Default ):
 
     ARTICLE_DELETE_ERROR_MESSAGE = '文章删除失败！'
 
+    PAGE_SIZE = 10
+
+    MAX_PAGE = 10
+
+
     pass
