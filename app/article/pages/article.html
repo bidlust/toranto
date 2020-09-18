@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>文章管理
+                <small>基本设置</small>
+            </h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="form_basic.html#">选项1</a>
+                    </li>
+                    <li>
+                        <a href="form_basic.html#">选项2</a>
+                    </li>
+                </ul>
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+             <p>
+                <button type="button" class="btn btn-w-m btn-primary B_menuItem" data-action="{{ url_for('article.article_create') }}" data-index="{{ range(10000,50000) | random }}" data-title="新建文章">
+                    <i class="fa fa-plus-square"></i>&nbsp;新增
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-w-m btn-warning refreshButton">
+                    <i class="fa fa-refresh"></i>&nbsp;刷新页面
+                </button>
+            </p>
+            <table id="dataTable" class="table table-striped"></table>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function () {
+
+    //1.初始化Table
+    var oTable = new TableInit();
+    oTable.Init();
+
+    //2.初始化Button的点击事件
+    var oButtonInit = new ButtonInit();
+    oButtonInit.Init();
+
+});
+
+window.operateEvents = {
+    'click .delete': function (e, value, row, index) {
+        layer.confirm("确定删除？",{
+		btn: ['确定', '取消']
+	    }, function () {
+		// 按钮1的事件
+		$.get("{{url_for('article.article_delete')}}?id=" + row.id, function(response){
+		    $("#dataTable").bootstrapTable('refresh');
+		    layer.alert(response.message);
+		})
+	    }, function(){
+		// 按钮2的事件
+	    });
+    }
+}
+
+
+
+var TableInit = function () {
+    var oTableInit = new Object();
+    //初始化Table
+    oTableInit.Init = function () {
+        $('#dataTable').bootstrapTable({
+            url: "{{ url_for('article.article_lists') }}",         //请求后台的URL（*）
+           method: 'post',                      //请求方式（*）
+            dataType: 'json',
+            theadClasses:'.thead-light',
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            showPaginationSwitch: false,        //是否显示分页数
+            sortable: false,                     //是否启用排序
+            sortName: "title",                     //是否启用排序
+            sortOrder: "desc",                   //排序方式
+            queryParams: oTableInit.queryParams,//传递参数（*）
+            queryParamsType: '',                //如果要在oTableInit.queryParams方法获取pageNumber和pageSize的值，需要将此值设置为空字符串（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            singleSelect: false,                 //是否单选模式
+            height: $(window).height() - 200,   //table总高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+            showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            paginationPreText: "上一页",
+            paginationNextText: "下一页",
+            columns: [
+                {
+                    field: 'SerialNumber',
+                    title: '序号',
+                    formatter: function (value, row, index) {
+                        return index+1;
+                    }
+                }, {
+                    field: 'category',
+                    title: '分类',
+                }, {
+                    field: 'title',
+                    title: '标题',
+                }, {
+                    field: 'author',
+                    title: '作者',
+                    align: 'center',
+                }, {
+                    field: 'click',
+                    title: '点击量',
+                    align: 'center',
+                }, {
+                    field: 'top',
+                    title: '是否置顶',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value == 1){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-danger">×</span>'
+                        }
+                    }
+                }, {
+                    field: 'iscomment',
+                    title: '是否允许评论',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value == 1){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-danger">×</span>'
+                        }
+                    }
+                },{
+                    field: 'ispublish',
+                    title: '发布状态',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value == 1){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-danger">×</span>'
+                        }
+                    }
+                },{
+                    field: 'isvisible',
+                    title: '显示状态',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value == 1){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-danger">×</span>'
+                        }
+                    }
+                },{
+                    field: 'ispassword',
+                    title: '密码保护',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if(value){
+                            return '<span class="badge badge-primary">√</span>'
+                        }else{
+                            return '<span class="badge badge-danger">×</span>'
+                        }
+                    }
+                },{
+                    field: 'price',
+                    title: '出价',
+                    align: 'center'
+                },{
+                    field: 'created',
+                    title: '创建时间',
+                    align: 'center'
+                },{
+                    field: 'operate',
+                    title: '操作',
+                    align: 'center',
+                    valign: 'middle',
+                    events: operateEvents,
+                    width: 200,
+                    formatter: function (value, row, index) {
+                        var result = "";
+                        result += '<button data-action="{{ url_for('article.article_create') }}?aid=' + row.id + '" data-index="' + row.id + '" data-title="编辑文章" class="B_menuItem btn btn-primary btn-sm">编辑</button>';
+                        result += '<button class="delete btn btn-danger btn-sm" style="margin-left:10px;">删除</button>';
+                        return result;
+                    }
+                }
+            ]
+        });
+    };
+
+    //得到查询的参数
+    oTableInit.queryParams = function (params) {
+        // 特别说明：
+        //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+　　　　　// 如果queryParamsType=limit,params包含{limit, offset, search, sort, order}
+　　　　　// 如果queryParamsType!=limit,params包含{pageSize, pageNumber, searchText, sortName, sortOrder}
+        var temp = {
+            pageSize: params.pageSize,   //页面大小
+            pageNumber: params.pageNumber,  //页码
+        };
+        return temp;
+    };
+    return oTableInit;
+};
+
+
+var ButtonInit = function () {
+    var oInit = new Object();
+    var postdata = {};
+
+    oInit.Init = function () {
+        $("#btn_query").click(function () {
+            $("#tb_departments").bootstrapTable('refresh');
+        });
+    };
+
+    return oInit;
+};
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>H+ 后台主题UI框架 - 文章列表</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="{{ url_for('static', filename='libs/bootstrap/3.3.6/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='libs/bootstrap-table/1.17.1/css/bootstrap-table.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='libs/font-awesome/4.4.0/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='libs/markdown/css/bootstrap-markdown.min.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='libs/fileinput/css/fileinput.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='libs/fileinput/themes/explorer-fa/theme.css') }}" rel="stylesheet">
+
+    <script src="{{ url_for('static', filename='libs/jquery/2.1.4/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/bootstrap/3.3.6/js/bootstrap.min.js') }}"></script>
+
+
+    <!-- bootstrap-table -->
+    <script src="{{ url_for('static', filename='libs/bootstrap-table/1.17.1/js/bootstrap-table.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/bootstrap-table/1.17.1/js/bootstrap-table-zh-CN.min.js') }}"></script>
+
+    <!-- bootstrap-select -->
+    <link href="{{ url_for('static', filename='libs/bootstrap-select-1.13.9/css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='libs/bootstrap-select-1.13.9/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/bootstrap-select-1.13.9/js/i18n/defaults-zh_CN.js') }}"></script>
+
+    <!-- markdown -->
+    <script src="{{ url_for('static', filename='libs/markdown/js/markdown.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/markdown/js/to-markdown.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/markdown/js/bootstrap-markdown.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/markdown/js/bootstrap-markdown.zh.js') }}"></script>
+
+    <!-- 系统首页 -->
+    <script src="{{ url_for('static', filename='libs/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/layer/layer.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/hplus/hplus.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contabs.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/pace/pace.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+
+     <!-- laydate -->
+    <script src="{{ url_for('static', filename='libs/layer/laydate/laydate.js') }}"></script>
+
+    <!-- jquery validation -->
+    <script src="{{ url_for('static', filename='libs/validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/validation/dist/localization/messages_zh.js') }}"></script>
+
+    <!-- file upload -->
+    <script src="{{ url_for('static', filename='libs/fileinput/js/plugins/sortable.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/fileinput/js/fileinput.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/fileinput/js/locales/zh.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/fileinput/themes/explorer-fa/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/fileinput/themes/fa/theme.js') }}"></script>
+
+    <!-- ueditor -->
+	<script src="{{ url_for('static', filename='libs/ueditor/ueditor.config.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/ueditor/ueditor.all.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/ueditor/ueditor.parse.js') }}"></script>
+
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        {% block content %}
+        {% endblock %}
+    </div>
+<script>
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        let csrftoken = $('meta[name=csrf-token]').attr('content')
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken)
+        }
+    }
+})
+$("body").on("click", ".B_menuItem", openTab)
+$("body").on("click", ".refreshButton", refreshPage)
+$("body").on("click", ".closeTabButton", closeTabPage)
+</script>
+</body>
+</html>
