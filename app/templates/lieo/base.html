@@ -46,12 +46,10 @@
       </button>
       <div class="toggle-items">
         <ul>
-          <li><a href="https://blog.hduzplus.xyz" target="_self">首页</a></li>
-  <li><a href="https://blog.hduzplus.xyz/tags.html" target="_self">标签墙</a></li>
-  <li><a href="https://blog.hduzplus.xyz/archives.html" target="_self">存档</a></li>
-  <li><a href="https://blog.hduzplus.xyz/links.html" target="_self">友情链接</a></li>
-  <li><a href="https://blog.hduzplus.xyz/start">立即使用</a></li>
-</ul>
+            {% for nav in navigate %}
+            <li><a href="{{ nav.navigate_url }}" target="_self">{{nav.navigate_name}}</a></li>
+            {% endfor %}
+        </ul>
       </div>
     </div>
 
@@ -59,11 +57,9 @@
   <a class="brand" href="/">{{ setting.get('site_name') }}</a>
   <div class="items">
     <ul>
-      <li><a href="https://blog.hduzplus.xyz" target="_self">首页</a></li>
-      <li><a href="https://blog.hduzplus.xyz/tags.html" target="_self">标签墙</a></li>
-      <li><a href="https://blog.hduzplus.xyz/archives.html" target="_self">存档</a></li>
-      <li><a href="https://blog.hduzplus.xyz/links.html" target="_self">友情链接</a></li>
-      <li><a href="https://blog.hduzplus.xyz/start">立即使用</a></li>
+        {% for nav in navigate %}
+        <li><a href="{{ nav.navigate_url }}" target="_self">{{nav.navigate_name}}</a></li>
+        {% endfor %}
     </ul>
   </div>
 </div>

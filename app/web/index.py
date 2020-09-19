@@ -2,7 +2,7 @@
 # by dongchao <cookie@maxcale.cn>
 
 from flask import render_template, request, session
-from app.models import Article, TorantoSetting
+from app.models import Article, TorantoSetting, Navigate
 from app import db, app
 from . import web
 import datetime
@@ -39,4 +39,28 @@ def web_index():
     #settings
     site_setting = db.session.query(TorantoSetting.key, TorantoSetting.value).filter(TorantoSetting.valid=='1').all()
     setting = {k:v for (k, v) in site_setting}
-    return render_template('{}/index.html'.format(session.get('skin')), articles=articles, totalNum=total_number, setting=setting)
+
+    #navigate
+    navigate = db.session.query(
+        Navigate.navigate_name,
+        Navigate.navigate_tag,
+        Navigate.navigate_url
+    ).filter(Navigate.deleted_at == None).order_by(Navigate.sq.asc()).all()
+
+    #article
+    articles = db.session.query(
+        Article.article_tag,
+        Article.article_category,
+        Article.article_author,
+        Article.article_click,
+        Article.article_desc,
+        Article.created_at
+    ).filter(Article.deleted_at==None, Article.ispublish=='1', Article.valid=='1') \
+    .order_by(Article.top.desc(), Article.created_at.desc()).all()
+
+    return render_template('{}/index.html'.format(session.get('skin')),
+                           articles=articles,
+                           totalNum=total_number,
+                           setting=setting,
+                           navigate=navigate,
+                           )
