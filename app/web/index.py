@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # by dongchao <cookie@maxcale.cn>
 
-from flask import render_template, request
-from app.models import Article
+from flask import render_template, request, session
+from app.models import Article, TorantoSetting
 from app import db, app
 from . import web
 import datetime
@@ -35,4 +35,8 @@ def web_index():
     .paginate(page_number, per_page=page_size, error_out=True)
     total_number = pagination.total
     articles = pagination.items
-    return render_template('index.html', articles=articles, totalNum=total_number)
+
+    #settings
+    site_setting = db.session.query(TorantoSetting.key, TorantoSetting.value).filter(TorantoSetting.valid=='1').all()
+    setting = {k:v for (k, v) in site_setting}
+    return render_template('{}/index.html'.format(session.get('skin')), articles=articles, totalNum=total_number, setting=setting)

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
@@ -9,52 +9,44 @@
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no"/>
-<title>Jiahao.Zhang's Blog</title>
-<meta name="description" content="Jiahao.Zhang's Blog, Jiahao的博客"/>
-<meta property="og:description" content="Jiahao.Zhang's Blog, Jiahao的博客"/>
-    <meta name="keywords" content="Jiahao, Zhang, Zhang Jiahao, Jiahao.Zhang, 佳皓的博客, 博客, blog, Jiahao.Zhang's blog, Jiahao blog"/>
-<link rel="dns-prefetch" href="https://blog.hduzplus.xyz"/>
+<title>{{ setting.site_title }}</title>
+<meta name="description" content="{{ setting.site_description }}"/>
+<meta property="og:description" content="{{ setting.site_description }}"/>
+<meta name="keywords" content="{{ setting.site_keywords }}"/>
+<link rel="dns-prefetch" href="{{ setting.site_domain }}"/>
 <link rel="dns-prefetch" href="//cdn.jsdelivr.net"/>
-<link rel="preconnect" href="https://blog.hduzplus.xyz">
-<link rel="icon" type="image/png" href="https://image.hduzplus.xyz/image/1572689639700.jpg"/>
-<link rel="apple-touch-icon" href="https://image.hduzplus.xyz/image/1572689639700.jpg">
-<link rel="shortcut icon" type="image/x-icon" href="https://image.hduzplus.xyz/image/1572689639700.jpg">
-<meta name="copyright" content="B3log"/>
+<link rel="preconnect" href="{{ setting.site_domain }}">
+<link rel="icon" type="image/png" href="{{ setting.site_icon }}"/>
+<link rel="apple-touch-icon" href="">
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.site_icon }}">
+<meta name="copyright" content="{{ setting.site_foot }}"/>
 <meta http-equiv="Window-target" content="_top"/>
 <meta property="og:locale" content="zh_CN"/>
-<meta property="og:title" content="Jiahao.Zhang's Blog"/>
-<meta property="og:site_name" content="Jiahao.Zhang&#39;s Blog"/>
-<meta property="og:url"
-      content="https://blog.hduzplus.xyz/?from=github_page"/>
-<meta property="og:image" content="https://image.hduzplus.xyz/image/1572689639700.jpg"/>
-<link rel="search" type="application/opensearchdescription+xml" title="Jiahao.Zhang's Blog" href="/opensearch.xml">
-<link href="https://blog.hduzplus.xyz/rss.xml" title="RSS" type="application/rss+xml" rel="alternate"/>
+<meta property="og:title" content="{{ setting.site_title }}"/>
+<meta property="og:site_name" content="{{ setting.site_name }}"/>
+<meta property="og:url" content="{{ setting.site_domain }}"/>
+<meta property="og:image" content="{{ setting.site_og_image }}"/>
+<link rel="search" type="application/opensearchdescription+xml" title="{{ setting.site_name }}" href="/opensearch.xml">
 <link rel="manifest" href="https://blog.hduzplus.xyz/manifest.json">
-            <link rel="canonical" href="https://blog.hduzplus.xyz/">
-      <link type="text/css" rel="stylesheet" href="https://blog.hduzplus.xyz/skins/solo-skin-emiya/css/base.css?1590671083314" charset="utf-8" />
-    <meta name="msvalidate.01" content="29FAF13DDC9F57C8B50FF332AC822D6B" />
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?c3f18d6a6b78a417f1c596e29d39c44d";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-<meta name="domain_verify" content="pmrgi33nmfuw4ir2ejugi5l2obwhk4zopb4xuirmejtxk2leei5ceyjqmmzwiytgga2gmnbwgrtdimdcgu2wgmlbmy3tmnleg4zgmyzreiwce5djnvsvgylwmurdumjvgyytamjuge4tinjrgv6q">
+<link rel="canonical" href="{{ setting.site_domain }}">
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='lieo/base.css') }}" charset="utf-8" />
+<meta name="msvalidate.01" content="29FAF13DDC9F57C8B50FF332AC822D6B" />
+  <!--
+<meta name="domain_verify" content="">
+-->
   </head>
   <body id="emiya_blog">
-  <nav class="navbar J_navbar">
+<nav class="navbar J_navbar">
     <div class="navbar__container navbar__container--mobile">
-      <a class="brand" href="/">Jiahao.Zhang's Blog</a>
+      <a class="brand" href="/">{{ setting.get('site_name') }}</a>
       <button type="button" class="toggle J_navbar_toggle" data-for="toggle-items">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
       <div class="toggle-items">
-        <ul>  <li><a href="https://blog.hduzplus.xyz" target="_self">首页</a></li>
+        <ul>
+          <li><a href="https://blog.hduzplus.xyz" target="_self">首页</a></li>
   <li><a href="https://blog.hduzplus.xyz/tags.html" target="_self">标签墙</a></li>
   <li><a href="https://blog.hduzplus.xyz/archives.html" target="_self">存档</a></li>
   <li><a href="https://blog.hduzplus.xyz/links.html" target="_self">友情链接</a></li>
@@ -63,19 +55,20 @@ var _hmt = _hmt || [];
       </div>
     </div>
 
-    <div class="navbar__container navbar__container--web">
-      <a class="brand" href="/">Jiahao.Zhang's Blog</a>
-      <div class="items">
-        <ul>  <li><a href="https://blog.hduzplus.xyz" target="_self">首页</a></li>
-  <li><a href="https://blog.hduzplus.xyz/tags.html" target="_self">标签墙</a></li>
-  <li><a href="https://blog.hduzplus.xyz/archives.html" target="_self">存档</a></li>
-  <li><a href="https://blog.hduzplus.xyz/links.html" target="_self">友情链接</a></li>
-  <li><a href="https://blog.hduzplus.xyz/start">立即使用</a></li>
-</ul>
-      </div>
-    </div>
-  </nav>
-    <div class="custom_header" style="background-image: url('/skins/solo-skin-emiya/images/header.jpg')"></div>
+<div class="navbar__container navbar__container--web">
+  <a class="brand" href="/">{{ setting.get('site_name') }}</a>
+  <div class="items">
+    <ul>
+      <li><a href="https://blog.hduzplus.xyz" target="_self">首页</a></li>
+      <li><a href="https://blog.hduzplus.xyz/tags.html" target="_self">标签墙</a></li>
+      <li><a href="https://blog.hduzplus.xyz/archives.html" target="_self">存档</a></li>
+      <li><a href="https://blog.hduzplus.xyz/links.html" target="_self">友情链接</a></li>
+      <li><a href="https://blog.hduzplus.xyz/start">立即使用</a></li>
+    </ul>
+  </div>
+</div>
+</nav>
+    <div class="custom_header" style="background-image: url('{{url_for('static', filename='images/header.jpg')}}')"></div>
     <div class="container-fluid">
       <main id="pjax" class="container--left">
 
@@ -85,338 +78,10 @@ var _hmt = _hmt || [];
     </div>
   </header>
 <div>
-    <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E5%89%8D%E7%AB%AF">前端</a>
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%A0%94%E7%A9%B6">研究</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2020-06-07</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="学习d3过程中遇到的比例尺总结" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">学习d3过程中遇到的比例尺总结</a>
-      </div>
-      <div class="abstract vditor-reset"><p>在学习d3、写Demo时用到过一些比例尺，但是总是用了就忘，记不住它们的用处，分辨不出什么场景适合用哪种比例尺。于是整理一篇文章记录它们的用处与用法。</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2020-06-07</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html#comments">
-          <span data-uvstatcmt="1591517345538">0</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">0</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">阅读全文</a>
-    </div>
-  </article>
 
-  <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%A0%94%E7%A9%B6">研究</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2020-04-19</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="关于TCP 拆/黏包 的想法" href="https://blog.hduzplus.xyz/articles/2020/04/19/1587284780236.html">关于TCP 拆/黏包 的想法</a>
-      </div>
-      <div class="abstract vditor-reset"><p>其实TCP并不存在"包"的概念。我们俗称的"拆/黏包"只是很形象的描述了"多次send的数据被一次全部recv了出来"的情况。实际上TCP是流式协议, 数据是以数据流的形式存在的。有一个很简单的类比就是大家都知道文件流, 那么在读文件的时候肯定不会说我的文件数据被"拆/黏包"了吧。</p>
-<p>那么这种奇怪的情况我们应该怎么解决呢？事实上, TCP会帮我们把数据变为字节流依次发出, 我们应该考虑如何才能<strong>依次</strong>解析数据流。TCP只是数据搬运工, 具体怎么装箱拆箱还是需要由我们来做。</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2020-04-19</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2020/04/19/1587284780236.html#comments">
-          <span data-uvstatcmt="1587284780236">0</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2020/04/19/1587284780236.html">0</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2020/04/19/1587284780236.html">阅读全文</a>
-    </div>
-  </article>
-  <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E5%89%8D%E7%AB%AF">前端</a>
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%A0%94%E7%A9%B6">研究</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2019-11-27</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="Base64格式图片插入DOM卡顿解决方案" href="https://blog.hduzplus.xyz/use-blob-instead-of-base64">Base64格式图片插入DOM卡顿解决方案</a>
-      </div>
-      <div class="abstract vditor-reset"><p>在某些场景下我们会遇到将一张被转为base64编码的图片插入到DOM树中的需求。<br>
-如果当这个图片很大导致base64编码的字符串过长，在插入DOM的过程中难免会造成UI上的卡顿。<br>
-尤其是在当下，各种UI框架盛行，DOM节点乱用滥用使得大部分网站的DOM树过深过复杂，插入一个过大的DOM节点势必会影响用户体验。</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2019-11-27</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/use-blob-instead-of-base64#comments">
-          <span data-uvstatcmt="1574784234576">2</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/use-blob-instead-of-base64">433</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/use-blob-instead-of-base64">阅读全文</a>
-    </div>
-  </article>
-  <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%94%9F%E6%B4%BB">生活</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2019-11-22</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="纯开发实现天气之子中的网站系统有多难" href="https://blog.hduzplus.xyz/articles/2019/11/22/1574355674785.html">纯开发实现天气之子中的网站系统有多难</a>
-      </div>
-      <div class="abstract vditor-reset"><p>在电影《天气之子》中，男主角帆高为女主角阳菜制作了专门用于接收“晴女”工作的网站。根据影片剧情走向可以看出，这并不是一个简单的纯展示网页，而是一套带有后台管理功能、拥有独立域名的网站系统。那么开发这样一个看似简单的系统，都需要哪些知识储备、涉及到的技术栈有多深呢？</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2019-11-22</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2019/11/22/1574355674785.html#comments">
-          <span data-uvstatcmt="1574355674785">1</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2019/11/22/1574355674785.html">395</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2019/11/22/1574355674785.html">阅读全文</a>
-    </div>
-  </article>
-  <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/Javascript">Javascript</a>
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E5%89%8D%E7%AB%AF">前端</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2019-11-03</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="目录生成小函数代码分析" href="https://blog.hduzplus.xyz/articles/2019/11/03/1572712117914.html">目录生成小函数代码分析</a>
-      </div>
-      <div class="abstract vditor-reset"><p>针对文章内容页，我的博客皮肤使用了一段非常小的函数来生成文章目录。</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2019-11-03</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2019/11/03/1572712117914.html#comments">
-          <span data-uvstatcmt="1572712117914">0</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2019/11/03/1572712117914.html">107</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2019/11/03/1572712117914.html">阅读全文</a>
-    </div>
-  </article>
-  <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%94%9F%E6%B4%BB">生活</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2019-10-31</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="近期随想" href="https://blog.hduzplus.xyz/articles/2019/10/31/1572532932683.html">近期随想</a>
-      </div>
-      <div class="abstract vditor-reset"><p>入职新公司快大半年了，也逐渐适应了这边的工作节奏。适应工作并不是一番风顺的,新的开发环境与新的开发方式让我在初期跌了不少跟头。工作方面唯一令我感到担忧的还是我的英语。个人的学习方面几乎停滞。身体方面的状况也有些担忧。2019年还有两个月就结束了，该清的账该做的总结也应该开始了，希望今年不要留有遗憾。</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2019-10-31</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2019/10/31/1572532932683.html#comments">
-          <span data-uvstatcmt="1572532932683">2</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2019/10/31/1572532932683.html">127</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2019/10/31/1572532932683.html">阅读全文</a>
-    </div>
-  </article>
-  <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%A0%94%E7%A9%B6">研究</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2019-05-25</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="Running Yarn with offline mode" href="https://blog.hduzplus.xyz/running-yarn-with-offline-mode">Running Yarn with offline mode</a>
-      </div>
-      <div class="abstract vditor-reset"><p>简单介绍一下<code>yarn</code>安装包的机制、<code>yarn</code>的缓存、<code>yarn</code>的<code>offline mode</code>的开启方式与验证方式</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2019-05-25</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/running-yarn-with-offline-mode#comments">
-          <span data-uvstatcmt="1558773951008">9</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/running-yarn-with-offline-mode">1,756</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/running-yarn-with-offline-mode">阅读全文</a>
-    </div>
-  </article>
-  <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%94%9F%E6%B4%BB">生活</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2019-05-09</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="离易" href="https://blog.hduzplus.xyz/articles/2019/05/09/1557410961776.html">离易</a>
-      </div>
-      <div class="abstract vditor-reset"><p>简单的工作复盘与自我总结</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2019-05-09</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2019/05/09/1557410961776.html#comments">
-          <span data-uvstatcmt="1557410961776">31</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2019/05/09/1557410961776.html">4,929</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2019/05/09/1557410961776.html">阅读全文</a>
-    </div>
-  </article>
-  <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">zjhch123</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%94%9F%E6%B4%BB">生活</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2018-12-22</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="为什么开发的时间永远不够" href="https://blog.hduzplus.xyz/why-we-have-no-time">为什么开发的时间永远不够</a>
-      </div>
-      <div class="abstract vditor-reset"><p>正式参加工作已经6个月了。在这6个月中，我陆陆续续的直接或间接的负责过一些可大可小的项目。然而，我在项目制作过程中发现咱们程序员们的时间似乎永远也不够用。我尝试着从多个方向进行了思考，并归纳总结成这篇文章。</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2018-12-22</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/why-we-have-no-time#comments">
-          <span data-uvstatcmt="1545486864691">15</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/why-we-have-no-time">6,093</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/why-we-have-no-time">阅读全文</a>
-    </div>
-  </article>
 
+  {% block content %}
+  {% endblock %}
 
   <div class="pagination">
     <a class="pagination__item pagination__item--right" href="https://blog.hduzplus.xyz?p=2">Next &raquo;</a>
@@ -579,7 +244,7 @@ window.wxShareConfig = {};
   }
 </script>
 <script type="text/javascript" src="https://blog.hduzplus.xyz/js/common.min.js?1590671083314" charset="utf-8"></script>
-<script type="text/javascript" src="https://blog.hduzplus.xyz/skins/solo-skin-emiya/js/common.min.js?1590671083314" charset="utf-8"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='lieo/skin.js')}}" charset="utf-8"></script>
 
   </body>
 </html>

@@ -78,7 +78,7 @@
                     </label>
 
                     <div class="col-sm-4">
-                        <select class="form-control" name="skin" id="skin">
+                        <select class="form-control" name="site_skin" id="site_skin">
                             <option value="">请选择皮肤</option>
                             {% for skin in skins %}
                                 <option value="{{skin}}" {% if settings.get('site_skin')==skin %} selected="selected" {% endif %} >{{skin}}</option>

@@ -1,0 +1,43 @@
+{% extends 'lieo/base.html' %}
+
+{% block content %}
+    {% for article in articles %}
+     <article class="article">
+    <div class="article__info">
+      <div class="article__info--left">
+        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
+          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
+          <span class="author__name">zjhch123</span>
+        </a>
+        <span class="split">in</span>
+        <span class="tags">
+          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E5%89%8D%E7%AB%AF">前端</a>
+          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%A0%94%E7%A9%B6">研究</a>
+        </span>
+      </div>
+      <div class="article__info--right">
+        <span class="createTime f-web">2020-06-07</span>
+      </div>
+    </div>
+    <div class="article__intro">
+      <div class="title">
+        <a pjax-title="学习d3过程中遇到的比例尺总结" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">学习d3过程中遇到的比例尺总结</a>
+      </div>
+      <div class="abstract vditor-reset"><p>在学习d3、写Demo时用到过一些比例尺，但是总是用了就忘，记不住它们的用处，分辨不出什么场景适合用哪种比例尺。于是整理一篇文章记录它们的用处与用法。</p></div>
+    </div>
+    <div class="article__visit">
+      <div class="article__visit--left">
+        <span class="item--split createTime">2020-06-07</span>
+        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html#comments">
+          <span data-uvstatcmt="1591517345538">0</span>
+          评论
+        </a>
+        <span class="item">
+          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">0</span> 浏览
+        </span>
+      </div>
+      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">阅读全文</a>
+    </div>
+  </article>
+  {% endfor %}
+{% endblock %}

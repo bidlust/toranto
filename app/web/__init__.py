@@ -3,8 +3,21 @@
 
 
 from flask import Blueprint, session, request, make_response, jsonify, abort
+from app import db
+from app.models import TorantoSetting
+web = Blueprint('web', __name__, template_folder='pages')
 
-web = Blueprint('web', __name__, template_folder='pages', url_prefix='/index')
+@web.before_request
+def web_before_request():
+
+    skin = session.get('skin')
+    if not skin:
+        # get blog skin
+        setting_skin = db.session.query(TorantoSetting.value).filter(TorantoSetting.valid == '1', TorantoSetting.key == 'site_skin').first()
+        if setting_skin:
+            session['skin'] = setting_skin[0]
+        else:
+            session['skin'] = 'default'
 
 
 from . import index

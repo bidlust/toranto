@@ -300,4 +300,7 @@ class Develop( Default ):
 
     SKINS = ['black', 'lieo']
 
+    COOKIE_MAX_AGE = 1 * 24 * 60 * 60
+
+
     pass
