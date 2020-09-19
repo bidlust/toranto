@@ -42,4 +42,19 @@
     </div>
   </article>
   {% endfor %}
+{% if page_number == 1 %}
+<div class="pagination">
+    <a class="pagination__item pagination__item--right" href="/index?page={{ page_number + 1 }}">Next &raquo;</a>
+  </div>
+{% elif page_number > 1 and page_number < total_number %}
+<div class="pagination">
+    <a class="pagination__item pagination__item--right" href="/index?page={{ page_number + 1 }}">Next &raquo; </a>
+    <a class="pagination__item pagination__item--right" href="/index?page={{ page_number - 1 }}">&laquo; Previous</a>
+</div>
+{% else %}
+<div class="pagination">
+     <a class="pagination__item pagination__item--right" href="/index?page={{ page_number - 1 }}">&laquo; Previous </a>
+</div>
+{% endif %}
+
 {% endblock %}

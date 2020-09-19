@@ -19,6 +19,7 @@ def web_index():
     params = list()
     params.append(Article.isvisible == 1)
     params.append(Article.ispublish == 1)
+    params.append(Article.valid == 1)
     params.append(Article.date_expire > datetime.datetime.now().strftime("%Y-%m-%d"))
 
     page_size = app.config.get('PAGE_SIZE')
@@ -47,20 +48,13 @@ def web_index():
         Navigate.navigate_url
     ).filter(Navigate.deleted_at == None).order_by(Navigate.sq.asc()).all()
 
-    #article
-    articles = db.session.query(
-        Article.article_tag,
-        Article.article_category,
-        Article.article_author,
-        Article.article_click,
-        Article.article_desc,
-        Article.created_at
-    ).filter(Article.deleted_at==None, Article.ispublish=='1', Article.valid=='1') \
-    .order_by(Article.top.desc(), Article.created_at.desc()).all()
+    #footer
 
     return render_template('{}/index.html'.format(session.get('skin')),
                            articles=articles,
                            totalNum=total_number,
                            setting=setting,
                            navigate=navigate,
+                           page_number = page_number,
+                           total_number = total_number
                            )
