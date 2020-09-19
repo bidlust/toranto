@@ -25,7 +25,6 @@ def web_index():
 
     pagination = db.session.query(
         Article.article_click,
-        Article.article_comment,
         Article.article_desc,
         Article.article_title,
         Article.article_author,

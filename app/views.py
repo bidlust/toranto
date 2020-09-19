@@ -2,7 +2,7 @@
 # by dongchao <cookie@maxcale.cn>
 
 from app import app,db, csrf
-from flask import  session, request, make_response, flash, redirect, render_template, jsonify
+from flask import  session, request, make_response, flash, redirect, render_template, jsonify, url_for
 from .funlib import  get_user_ip, login_required, get_tree_menu, get_random
 from .models import User, LoginHistory, TorantoSetting
 from sqlalchemy import desc
@@ -74,11 +74,8 @@ def main_page():
 
 @app.route('/')
 def app_index():
-    #setting = db.session.query(TorantoSetting).order_by(desc(TorantoSetting.created_at)).first()
 
-    setting = TorantoSetting.query.order_by(desc(TorantoSetting.created_at)).first()
-
-    return make_response(render_template('index.html', setting=setting, random=get_random()))
+    return redirect(url_for('web.web_index'))
 
 
 @app.route('/admin')

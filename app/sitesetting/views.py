@@ -78,7 +78,8 @@ def sitesetting_baseinfo():
             db.session.commit()
             flash('设置成功！', category='success')
 
-    settings = TorantoSetting.query.filter_by(created_by=session.get('username')).first()
+    settings = db.session.query(TorantoSetting.key, TorantoSetting.value).filter(TorantoSetting.valid=='1').all()
+
 
     return render_template('setting.html', settings=settings)
 

@@ -150,30 +150,12 @@ class TorantoSetting(db.Model):
     }
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    site_name = Column(String(255), nullable=False)
-    site_active = Column(CHAR(1), nullable=False, server_default='1')
-    site_comment = Column(CHAR(1), nullable=False, server_default='1')
-    site_title = Column(String(255), nullable=True)
-    site_logo = Column(String(255), nullable=True)
-    site_keywords = Column(String(255), nullable=True)
-    site_description = Column(Text, nullable=True)
-    site_foot = Column(String(255), nullable=True)
-    site_domain = Column(String(255), nullable=True)
-    created_by = Column(String(255), nullable=False, unique=True)
+    key = Column(String(255), nullable=False, unique=True)
+    value = Column(String(1024), nullable=True)
+    valid = Column(CHAR(1), nullable=False, server_default='1')
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
-
-    def __init__(self, **kwargs):
-        self.site_name          = kwargs.get('site_name')
-        self.site_active        = kwargs.get('site_active')
-        self.site_comment       = kwargs.get('site_comment')
-        self.site_title         = kwargs.get('site_title')
-        self.site_logo          = kwargs.get('site_logo')
-        self.site_keywords      = kwargs.get('site_keywords')
-        self.site_description   = kwargs.get('site_description')
-        self.site_foot          = kwargs.get('site_foot')
-        self.site_domain        = kwargs.get('site_domain')
-
+    deleted_at = Column(DateTime, nullable=True)
 
 
 class  Article(db.Model):
@@ -420,4 +402,5 @@ class Navigate(db.Model):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     deleted_at = Column(DateTime, nullable=True)
+
 
