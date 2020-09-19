@@ -298,5 +298,6 @@ class Develop( Default ):
 
     MAX_PAGE = 10
 
+    SKINS = ['black', 'lieo']
 
     pass
