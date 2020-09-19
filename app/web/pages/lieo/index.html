@@ -23,22 +23,22 @@
     </div>
     <div class="article__intro">
       <div class="title">
-        <a pjax-title="{{ article.article_title }}" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">{{ article.article_title }}</a>
+        <a pjax-title="{{ article.article_title }}" href="">{{ article.article_title }}</a>
       </div>
       <div class="abstract vditor-reset"><p>{{ article.article_desc }}</p></div>
     </div>
     <div class="article__visit">
       <div class="article__visit--left">
-        <span class="item--split createTime">2020-06-07</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html#comments">
+        <span class="item--split createTime">{{ article.created_at }}</span>
+        <a class="item item--split" href="">
           <span data-uvstatcmt="1591517345538">0</span>
           评论
         </a>
         <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">{{ article.article_click }}</span> 浏览
+          <span data-uvstaturl="">{{ article.article_click }} </span> 浏览
         </span>
       </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2020/06/07/1591517345538.html">阅读全文</a>
+      <a class="article__visit--right" href="">阅读全文</a>
     </div>
   </article>
   {% endfor %}
