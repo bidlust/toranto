@@ -29,7 +29,8 @@ def web_index():
         Article.article_desc,
         Article.article_title,
         Article.article_author,
-        Article.article_category
+        Article.article_category,
+        Article.article_tag
 
     ).filter(*params).order_by(Article.top.desc(), Article.created_at.desc(), ) \
     .paginate(page_number, per_page=page_size, error_out=True)

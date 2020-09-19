@@ -46,6 +46,7 @@ from app.link import link as link_blueprint
 from app.action import action as action_blueprint
 from app.navigate import navigate as navigate_blueprint
 from app.upload import upload as upload_blueprint
+from app.web import web as web_blueprint
 
 app.register_blueprint(dashboard_blueprint)
 app.register_blueprint(setting_blueprint)
@@ -55,6 +56,7 @@ app.register_blueprint(link_blueprint)
 app.register_blueprint(action_blueprint)
 app.register_blueprint(navigate_blueprint)
 app.register_blueprint(upload_blueprint)
+app.register_blueprint(web_blueprint)
 
 from . import views
 
