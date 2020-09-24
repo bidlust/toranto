@@ -30,16 +30,13 @@ def web_index():
         Article.article_title,
         Article.article_author,
         Article.article_category,
-        Article.article_tag
+        Article.article_tag,
+        Article.article_seo
 
     ).filter(*params).order_by(Article.top.desc(), Article.created_at.desc(), ) \
     .paginate(page_number, per_page=page_size, error_out=True)
     total_number = pagination.total
     articles = pagination.items
-
-    #settings
-    site_setting = db.session.query(TorantoSetting.key, TorantoSetting.value).filter(TorantoSetting.valid=='1').all()
-    setting = {k:v for (k, v) in site_setting}
 
     #navigate
     navigate = db.session.query(
@@ -53,7 +50,7 @@ def web_index():
     return render_template('{}/index.html'.format(session.get('skin')),
                            articles=articles,
                            totalNum=total_number,
-                           setting=setting,
+                           setting=session.get('setting'),
                            navigate=navigate,
                            page_number = page_number,
                            total_number = total_number

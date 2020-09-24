@@ -19,5 +19,11 @@ def web_before_request():
         else:
             session['skin'] = 'default'
 
+    # settings
+    if not session.get('setting'):
+        site_setting = db.session.query(TorantoSetting.key, TorantoSetting.value).filter(TorantoSetting.valid == '1').all()
+        session['setting'] = {k: v for (k, v) in site_setting}
+
 
 from . import index
+from . import article
