@@ -13,9 +13,6 @@
   <meta name="description" content="{{ setting.site_title }}" />
   <meta property="og:description" content="{{ setting.site_title }}" />
   <meta name="keywords" content="{{ setting.keywords }}" />
-      <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/gh/bidlust/cdn@1.0/solo/resources/" />
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net/gh/bidlust/cdn@1.0/solo/resources/">
   <link rel="icon" type="image/png" href="" />
   <link rel="apple-touch-icon" href="" />
   <link rel="shortcut icon" type="image/x-icon" href="" />
@@ -26,12 +23,10 @@
     <meta property="og:site_name" content="{{ setting.site_name }}" />
     <meta property="og:url" content="{{ setting.site_url }}" />
     <meta property="og:image" content="" />
-  <link rel="search" type="application/opensearchdescription+xml" title="{{ setting.site_title }}" href="/opensearch.xml" />
-  <link href="https://88250.b3log.org/rss.xml" title="RSS" type="application/rss+xml" rel="alternate" />
   <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
   <link rel="canonical" href="{{ setting.site_url }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bidlust/cdn@1.0/solo/resources/skins/9IPHP/css/base.css?{{ random }}" />
-  <script src="https://cdn.jsdelivr.net/npm/vditor@3.5.3/dist/js/icons/ant.js" async="" id="vditorIconScript"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/black/base.css') }}?{{ random }}" />
+  <link href="{{ url_for('static', filename='libs/bootstrap/3.3.6/css/bootstrap.min.css') }}" rel="stylesheet">
  </head>
  <body>
   <header>
@@ -47,40 +42,20 @@
    <div class="navbar">
     <div class="fn-clear wrapper">
      <nav class="fn-left">
-      <a href="https://88250.b3log.org"> <i class="icon-home"></i> 首页 </a>
-      <a href="/about" target="_self" rel="section"> <img class="page-icon" src="https://b3logfile.com/tag/React-XSQUutE.png" alt="关于我" />关于我 </a>
-      <a href="/my-github-repos" target="_self" rel="section"> <img class="page-icon" src="/images/github-icon.png" alt="我的开源" />我的开源 </a>
-      <a href="https://hacpai.com" target="_blank" rel="section"> <img class="page-icon" src="https://static.ld246.com/images/favicon.png" alt="链滴" />链滴 </a>
-      <a href="https://b3log.org" target="_blank" rel="section"> <img class="page-icon" src="https://static.b3log.org/images/brand/b3log-32.png" alt="B3log" />B3log </a>
-      <a href="https://88250.b3log.org/tags.html" rel="section"> <i class="icon-tags"></i> 标签墙 </a>
-      <a href="https://88250.b3log.org/archives.html"> <i class="icon-inbox"></i> 存档 </a>
-      <a rel="archive" href="https://88250.b3log.org/links.html"> <i class="icon-link"></i> 友链 </a>
-      <a rel="section" href="https://88250.b3log.org/rss.xml"> <i class="icon-rss"></i> RSS </a>
+      {% for nav in navigate %}
+      <a href="{{ nav.navigate_url }}" target="_self">
+       <span class="glyphicon {{ nav.navigate_icon }}"></span> {{nav.navigate_name}}</a>
+      {% endfor %}
      </nav>
      <div class="fn-right">
-      <form class="form" action="https://88250.b3log.org/search">
+      <form class="form" action="/search">
        <input placeholder="搜索" id="search" type="text" name="keyword" />
-       <button type="submit"><i class="icon-search"></i></button>
+       <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
       </form>
      </div>
     </div>
    </div>
   </header>
-  <div class="responsive fn-none">
-   <i class="icon-list"></i>
-   <ul class="list">
-    <li> <a href="https://88250.b3log.org/start"> <i class="icon-login"></i> 开始使用 </a> </li>
-    <li> <a href="https://88250.b3log.org"> <i class="icon-home"></i> 首页 </a> </li>
-    <li> <a href="/about" target="_self" rel="section"> <img class="page-icon" src="https://b3logfile.com/tag/React-XSQUutE.png" alt="关于我" />关于我 </a> </li>
-    <li> <a href="/my-github-repos" target="_self" rel="section"> <img class="page-icon" src="/images/github-icon.png" alt="我的开源" />我的开源 </a> </li>
-    <li> <a href="https://hacpai.com" target="_blank" rel="section"> <img class="page-icon" src="https://static.ld246.com/images/favicon.png" alt="链滴" />链滴 </a> </li>
-    <li> <a href="https://b3log.org" target="_blank" rel="section"> <img class="page-icon" src="https://static.b3log.org/images/brand/b3log-32.png" alt="B3log" />B3log </a> </li>
-    <li> <a href="https://88250.b3log.org/tags.html" rel="section"> <i class="icon-tags"></i> 标签墙 </a> </li>
-    <li> <a href="https://88250.b3log.org/archives.html"> <i class="icon-inbox"></i> 存档 </a> </li>
-    <li> <a rel="archive" href="https://88250.b3log.org/links.html"> <i class="icon-link"></i> 友链 </a> </li>
-    <li> <a rel="section" href="https://88250.b3log.org/rss.xml"> <i class="icon-rss"></i> RSS </a> </li>
-   </ul>
-  </div>
   <div class="wrapper">
    <div class="main-wrap">
     <main>
@@ -88,20 +63,8 @@
 		{% block content %}
 		{% endblock %}
       <div class="fn-clear">
-       <nav class="pagination fn-right">
-        <span class="page-number current">1</span>
-        <a class="page-number" href="https://88250.b3log.org?p=2">2</a>
-        <a class="page-number" href="https://88250.b3log.org?p=3">3</a>
-        <a class="page-number" href="https://88250.b3log.org?p=4">4</a>
-        <a class="page-number" href="https://88250.b3log.org?p=5">5</a>
-        <a class="page-number" href="https://88250.b3log.org?p=6">6</a>
-        <a class="page-number" href="https://88250.b3log.org?p=7">7</a>
-        <a class="page-number" href="https://88250.b3log.org?p=8">8</a>
-        <a class="page-number" href="https://88250.b3log.org?p=9">9</a>
-        <a class="page-number" href="https://88250.b3log.org?p=10">10</a>
-        <span class="page-number">...</span>
-        <a href="https://88250.b3log.org?p=35" class="page-number">35</a>
-        <a href="https://88250.b3log.org?p=2" class="page-number">&raquo;</a>
+        <nav class="pagination fn-right">
+        {{ page_html |  safe }}
        </nav>
       </div>
      </div>
@@ -115,12 +78,11 @@
         <h2>分类</h2>
        </header>
        <main>
-        <a href="https://88250.b3log.org/category/dev-language" aria-label="59 文章" class="tag vditor-tooltipped vditor-tooltipped__n"> 编程语言</a>
-        <a href="https://88250.b3log.org/category/past-summary" aria-label="102 文章" class="tag vditor-tooltipped vditor-tooltipped__n"> 往事与总结</a>
-        <a href="https://88250.b3log.org/category/i-love-opensource" aria-label="8 文章" class="tag vditor-tooltipped vditor-tooltipped__n"> 开源项目</a>
-        <a href="https://88250.b3log.org/category/linux" aria-label="31 文章" class="tag vditor-tooltipped vditor-tooltipped__n"> Linux</a>
-        <a href="https://88250.b3log.org/category/arch" aria-label="13 文章" class="tag vditor-tooltipped vditor-tooltipped__n"> 架构设计</a>
-        <a href="https://88250.b3log.org/category/database" aria-label="14 文章" class="tag vditor-tooltipped vditor-tooltipped__n"> 数据库</a>
+        {% if category %}
+         {% for cg in category %}
+          <a href="/category" aria-label="59 文章" class="tag vditor-tooltipped vditor-tooltipped__n"> {{ cg.category_name }}</a>
+         {% endfor %}
+        {% endif %}
        </main>
       </div>
       <div class="module">
@@ -128,21 +90,11 @@
         <h2>标签</h2>
        </header>
        <main>
-        <a rel="tag" href="https://88250.b3log.org/tags/Life%20in%20Programming" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="97 篇文章"> Life in Programming</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/golang" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="33 篇文章"> golang</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/Java" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="26 篇文章"> Java</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/My%20Linux" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="24 篇文章"> My Linux</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/Open%20Source" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="22 篇文章"> Open Source</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/J2SE%2FJavaSE" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="21 篇文章"> J2SE/JavaSE</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/B3log" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="18 篇文章"> B3log</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/Music" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="16 篇文章"> Music</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/J2EE%2FJavaEE" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="15 篇文章"> J2EE/JavaEE</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/%E6%95%99%E7%A8%8B" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="14 篇文章"> 教程</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/%E9%9B%A8%E7%97%95" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="14 篇文章"> 雨痕</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/C%2FC%2B%2B" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="14 篇文章"> C/C++</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/Go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="14 篇文章"> Go学习笔记</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/StoneAgeDict" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="12 篇文章"> StoneAgeDict</a>
-        <a rel="tag" href="https://88250.b3log.org/tags/NetBeans" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="12 篇文章"> NetBeans</a>
+       {% if tag_set %}
+          {% for tag in tag_set %}
+              <a rel="tag" href="/tags/{{ tag }}" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="26 篇文章"> {{ tag }} </a>
+          {% endfor %}
+       {% endif %}
        </main>
       </div>
       <div class="module meta">
@@ -174,17 +126,11 @@
         <h2>友链</h2>
        </header>
        <main>
-        <a rel="friend" target="_blank" href="http://vanessa.b3log.org" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="V"> Vanessa</a>
-        <a rel="friend" target="_blank" href="http://www.lshell.com" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="安神的博客"> Ansen's Blog</a>
-        <a rel="friend" target="_blank" href="http://zhengzexin.com" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="筚路蓝缕，以启山林"> 郑泽鑫博客</a>
-        <a rel="friend" target="_blank" href="https://newdee.cf" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="多可喜，亦多可悲"> 阁子</a>
-        <a rel="friend" target="_blank" href="https://zixizixi.cn" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="子兮子兮风兮寒，三江七泽情洄沿"> 星柒天子兮子兮博客</a>
-        <a rel="friend" target="_blank" href="https://blog.mufengs.com" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="The best preparation for tomorrow is doing your best today."> mufengs 的个人博客</a>
-        <a rel="friend" target="_blank" href="https://www.hjljy.cn" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="如野草般一岁一枯荣"> 海加尔金鹰</a>
-        <a rel="friend" target="_blank" href="https://vimjc.com" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="vim教程网专注于vim配置、插件、Vim命令和视频教程，提供vim中文教程、教程视频和vim使用技巧"> Vim 教程网</a>
-        <a rel="friend" target="_blank" href="http://blog.smallraw.com" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="爱 Google ，爱开源 ，爱分享"> SmallRaw 技术博客</a>
-        <a rel="friend" target="_blank" href="https://taohuawu.club" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="潘建锋的编程札记"> 潘建锋 | Mind Seeker</a>
-        <a rel="friend" target="_blank" href="http://www.haoservice.cn" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="一入码农深似海，从此天涯似路人"> 码农 code 之路</a>
+        {% if link %}
+          {% for lk in link %}
+             <a rel="friend" target="_blank" href="{{ lk.link_href }}" class="tag vditor-tooltipped vditor-tooltipped__n" aria-label="{{ lk.link_desc }}"> {{ lk.link_name }}</a>
+          {% endfor %}
+        {% endif %}
        </main>
       </div>
       <div class="module">
@@ -193,17 +139,16 @@
        </header>
        <main class="list">
         <ul>
-         <li> <a href="https://88250.b3log.org/archives/2020/06" title="2020 年 06 月(1)"> 2020 年 06 月(1)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2020/04" title="2020 年 04 月(2)"> 2020 年 04 月(2)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2020/03" title="2020 年 03 月(1)"> 2020 年 03 月(1)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2020/02" title="2020 年 02 月(3)"> 2020 年 02 月(3)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2020/01" title="2020 年 01 月(2)"> 2020 年 01 月(2)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2019/12" title="2019 年 12 月(2)"> 2019 年 12 月(2)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2019/11" title="2019 年 11 月(1)"> 2019 年 11 月(1)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2019/08" title="2019 年 08 月(4)"> 2019 年 08 月(4)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2019/06" title="2019 年 06 月(1)"> 2019 年 06 月(1)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives/2019/05" title="2019 年 05 月(2)"> 2019 年 05 月(2)</a> </li>
-         <li> <a href="https://88250.b3log.org/archives.html">...</a> </li>
+{% if archives %}
+    {% for archive in archives %}
+         <li>
+                <a href="https://blog.hduzplus.xyz/archives/2020/06"
+                  title="2020 年 06 月(1)">
+                  {{ archive[0].split('-')[0] }}年{{ archive[0].split('-')[1] }}月 ({{ archive[1] }})
+               </a>
+          </li>
+    {% endfor %}
+{% endif %}
         </ul>
        </main>
       </div>

@@ -3,43 +3,48 @@
 {% block content %}
 
 {% for article in articles %}
- <article class="article">
-    <div class="article__info">
-      <div class="article__info--left">
-        <a class="author" href="https://blog.hduzplus.xyz/authors/1459314516372" rel="nofollow">
-          <img class="author__avatar" src="https://img.hacpai.com/avatar/1459242579529_1556021082176.jpeg?imageView2/1/w/128/h/128/interlace/0/q/100" alt="author avatar" />
-          <span class="author__name">{{ article.author }}</span>
-        </a>
-        <span class="split">in</span>
-        <span class="tags">
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E7%A0%94%E7%A9%B6">研究</a>
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/%E5%89%8D%E7%AB%AF">前端</a>
-          <a class="tags__name" rel="tag" href="https://blog.hduzplus.xyz/tags/React">React</a>
-        </span>
-      </div>
-      <div class="article__info--right">
-        <span class="createTime f-web">2020-05-28</span>
-      </div>
-    </div>
-    <div class="article__intro">
-      <div class="title">
-        <a pjax-title="React.StrictMode 会导致多次渲染" href="https://blog.hduzplus.xyz/articles/2020/05/28/1590670559059.html">React.StrictMode 会导致多次渲染</a>
-      </div>
-      <div class="abstract vditor-reset"><p><code>StrictMode</code>会在开发模式中通过多次调用某些函数或方法来帮助开发者检测代码中可能存在的副作用。</p></div>
-    </div>
-    <div class="article__visit">
-      <div class="article__visit--left">
-        <span class="item--split createTime">2020-05-28</span>
-        <a class="item item--split" href="https://blog.hduzplus.xyz/articles/2020/05/28/1590670559059.html#comments">
-          <span data-uvstatcmt="1590670559059">0</span>
-          评论
-        </a>
-        <span class="item">
-          <span data-uvstaturl="https://blog.hduzplus.xyz/articles/2020/05/28/1590670559059.html">0</span> 浏览
-        </span>
-      </div>
-      <a class="article__visit--right" href="https://blog.hduzplus.xyz/articles/2020/05/28/1590670559059.html">阅读全文</a>
-    </div>
-  </article>
+<article class="post">
+        <header>
+            <h2>
+                <a title="{{ article.article_title }}" target="_blank" rel="bookmark" href="/article/{{ article.article_seo }}">
+                    {{ article.article_title }}
+                </a>
+            </h2>
+
+            <div class="meta">
+                <span class="vditor-tooltipped vditor-tooltipped__n"
+                      aria-label="更新日期">
+                    <i class="icon-date"></i>
+                    <time>
+                        {{ article.updated_at.strftime("%Y-%m-%d") }}
+                    </time>
+                </span>
+                &nbsp; | &nbsp;
+                <span class="vditor-tooltipped vditor-tooltipped__n" aria-label="评论数">
+                    <i class="icon-comments"></i>
+                    <a href="/comments">
+                        <span data-uvstatcmt="1592708224683">0</span> 评论</a>
+                </span>
+                &nbsp; | &nbsp;
+                <span class="vditor-tooltipped vditor-tooltipped__n" aria-label="浏览数">
+                    <i class="icon-views"></i>
+                    <span data-uvstaturl="https://88250.b3log.org/articles/2020/06/21/1592708224683.html">{{ article.article_click }}</span> 浏览
+                </span>
+            </div>
+        </header>
+        <div class="vditor-reset">
+
+        </div>
+        <footer class="fn-clear tags">
+             {% set tags = article.article_tag.split('@') %}
+            {% for tag in tags %}
+            <a class="tag" rel="tag" href="#">{{ tag }}</a>
+            {% endfor %}
+            <a href="/article/" rel="contents" class="fn-right">
+                阅读更多»
+            </a>
+        </footer>
+    </article>
+
 {% endfor %}
 {% endblock %}
