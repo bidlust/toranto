@@ -27,19 +27,14 @@ def article_lists():
         params = []
         params.append(Article.deleted_at == None)
         params.append(Article.valid == '1')
-        '''
-        params.append(Article.isvisible == '1')
-        params.append(Article.ispublish == '1')
-        params.append(Article.valid == '1')
-        params.append(db.cast( Article.date_expire, db.Date) > db.cast(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), db.Date))
-        '''
 
         article_title = request.form.get('article_title')
         if article_title:
             params.append(Article.article_title==article_title)
+        '''
         if not 'root' in session.get('role'):
             params.append(Article.article_author==session.get('username'))
-
+        '''
         pagination = db.session.query(
             Article.id,
             Article.article_title,
@@ -85,7 +80,7 @@ def article_create():
         iscomment = request.form.get('iscomment')
         istoolbar = request.form.get('istoolbar')
         password = request.form.get('article_password')
-        price = request.form.get('article_price')
+        price = request.form.get('article_price') or 0.0
         praise = request.form.get('article_praise') or app.config.get('ARTICLE_PRAISE')
         step = request.form.get('article_step') or app.config.get('ARTICLE_STEP')
 

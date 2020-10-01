@@ -22,6 +22,7 @@ def web_index():
     params.append(Article.isvisible == 1)
     params.append(Article.ispublish == 1)
     params.append(Article.valid == 1)
+    params.append(Article.deleted_at == None)
     params.append(Article.date_expire > datetime.datetime.now().strftime("%Y-%m-%d"))
 
     page_size = app.config.get('PAGE_SIZE')

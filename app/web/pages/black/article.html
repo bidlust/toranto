@@ -1,0 +1,33 @@
+{% extends 'black/base.html' %}
+
+{% block content %}
+
+ <div class="wrapper">
+      <div class="main-wrap">
+        <main>
+          <article class="post">
+            <header>
+              <h2>
+                <a rel="bookmark" href="/">{{ article.article_title }}</a></h2>
+              <div class="meta">
+                <span class="glyphicon glyphicon-time"></span>
+                  <time>{{ article.updated_at.strftime("%Y-%m-%d") }}</time></span>&nbsp; | &nbsp;
+                <span class="glyphicon glyphicon-comment"></span>
+                  <a href="#">
+                    <span data-uvstatcmt="">{{ article.article_comment or 0}}</span>
+                  </a>
+                &nbsp; | &nbsp;
+                  <span class="glyphicon glyphicon-globe" aria-label="浏览数"></span>
+                  <span data-uvstaturl="">{{ article.article_click }}</span>
+              </div>
+            </header>
+            <div class="vditor-reset post__content">
+              {{ article.article_content | safe }}
+            </div>
+          </article>
+        </main>
+      </div>
+    </div>
+
+{% endblock %}
+
