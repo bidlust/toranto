@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # by dongchao <cookie@maxcale.cn>
 
-from flask import render_template, request, session, abort
+from flask import render_template, request, session, abort, make_response, jsonify
 from app.models import Article, Category, Link
 from app import db, app
 from . import web
@@ -59,5 +59,24 @@ def web_article(seo):
         )
     else:
         abort(404)
+
+
+@web.route('/comment', methods=['GET', 'POST'])
+def web_comment():
+
+    username = request.form.get('username')
+    email = request.form.get('email')
+    url = request.form.get('url')
+    content = request.form.get('content')
+    cparent = request.form.get('cparent') or 0
+
+    if not username:
+        return make_response(jsonify({"code" : 1, "messge" : "请填写用户名称！"}))
+
+    if not email:
+        return make_response(jsonify({"code": 1, "messge": "请填写您的邮件地址！"}))
+
+    if not content:
+        return make_response(jsonify({"code": 1, "messge": "请填写您的留言内容！"}))
 
 
