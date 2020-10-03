@@ -307,13 +307,12 @@
             <div class="comment-body">
              <p class="uname"><b><a href="/user/68453">断了弦的情</a></b><em class="posted">2020-04-26 16:28</em></p>
              <p class="cont"> qq</p>
-             <p class="comment-meta"><a class="reply" uname="断了弦的情" uid="68453">回复</a><a class="shang" uid="68453" uname="断了弦的情" cid="925"><i class="icon icon-shang big_14"></i>打赏</a></p>
+             <p class="comment-meta"><a class="reply">回复</a></p>
             </div>
         </div>
       </div>
       <div class="response comments_item">
-        mkljkgh nbvb xfdytkl;l,. “bm
-          <h2><a href="/user/69044" class="image_border  "><img srcnjkjiol="http://imgs.bootstrapmb.com/2019/12/261100120.jpg" /></a><a href="/user/16964" class="image_border  "><img src="http://imgs.bootstrapmb.com/2019/5/081153046.jpg" /></a></h2>
+          <h2><a href="/user/69044" class="image_border  "><img src="http://imgs.bootstrapmb.com/2019/12/261100120.jpg" /></a><a href="/user/16964" class="image_border  "><img src="http://imgs.bootstrapmb.com/2019/5/081153046.jpg" /></a></h2>
           <div class="comment-post ">
             <div class="comment-body">
                  <p class="uname"><b><a href="/user/69044">倩</a></b>对<a href="/user/16964"><b>王公子</b></a>说 <em class="posted">2019-12-26 11:01</em></p>
@@ -345,7 +344,8 @@
       <span class="response-user"></span>
       <div class="contact-box text-center">
         <form id="commentForm" onsubmit="return false">
-            <input type="hidden" name="article_title"/>
+            <input type="hidden" name="article_id" value="{{ article.id }}"/>
+            <input type="hidden" name="cparent" value="0"/>
             <input type="hidden" value="{{ csrf_token() }}"/>
           <div class="form-group row">
             <div class="col-lg-6">
@@ -374,16 +374,21 @@
                     let f = document.getElementById('commentForm');
                     var fd=new FormData(f);
                     $.ajax({
-                                url: '{{ url_for('web.web_comment') }}',
-                                type: 'post',
-                                processData: false,
-                                contentType: false,
-                                data: fd,
-                                success: function () {
-                                    alert("ok")
-                                }
+                        url: '{{ url_for('web.web_comment') }}',
+                        type: 'post',
+                        processData: false,
+                        contentType: false,
+                        data: fd,
+                        success: function (res) {
+                        console.log(res)
+                        }
                     })
               })
+
+
+            $(".reply").click(function(){
+
+            })
           </script>
       </div>
     </div>
