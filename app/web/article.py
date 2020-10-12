@@ -2,7 +2,7 @@
 # by dongchao <cookie@maxcale.cn>
 
 from flask import render_template, request, session, abort, make_response, jsonify
-from app.models import Article, Category, Link
+from app.models import Article, Category, Link, Comment
 from app import db, app
 from . import web
 import datetime
@@ -67,16 +67,49 @@ def web_comment():
     username = request.form.get('username')
     email = request.form.get('email')
     url = request.form.get('url')
-    content = request.form.get('content')
+    content = request.form.get('comment_message')
     cparent = request.form.get('cparent') or 0
+    article_id = request.form.get('article_id')
+    comment_type = request.form.get('ctype') or 'article'
+    comment_article_title = request.form.get('article_title')
+
+    if not comment_article_title:
+        return make_response(jsonify({"code": 1, "message": "[err01] - 对不起，您暂时不能留言！"}))
 
     if not username:
-        return make_response(jsonify({"code" : 1, "messge" : "请填写用户名称！"}))
+        return make_response(jsonify({"code" : 1, "message" : "请填写用户名称！"}))
 
     if not email:
-        return make_response(jsonify({"code": 1, "messge": "请填写您的邮件地址！"}))
+        return make_response(jsonify({"code": 1, "message": "请填写您的邮件地址！"}))
 
     if not content:
-        return make_response(jsonify({"code": 1, "messge": "请填写您的留言内容！"}))
+        return make_response(jsonify({"code": 1, "message": "请填写您的留言内容！"}))
+
+    if not cparent:
+        cparent = 0
+
+    article = db.session.query(Article).filter(Article.article_title==comment_article_title).first()
+    if not article:
+        return make_response(jsonify({"code": 1, "messge": "[err02] - 对不起，您暂时不能留言！"}))
+    try:
+        comment = Comment(
+            comment_type = comment_type,
+            comment_article_title =comment_article_title,
+            comment_parent = cparent,
+            comment_username = username,
+            comment_email = email,
+            comment_url = url,
+            comment_content = content,
+            comment_ip = "{}".format( request.remote_addr )
+        )
+
+        db.session.add(comment)
+        db.session.commit()
+        return make_response(jsonify({"code" : 0, "message" : "提交成功，您的评论将在审核通过后显示！"}))
+    except Exception as e:
+        app.logger.exception(e)
+        db.session.rollback()
+        return make_response(jsonify({"code": 1, "message": "提交失败，请稍后再试！"}))
+
 
 

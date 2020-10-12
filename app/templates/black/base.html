@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="theme-color" content="#3b3e43" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -20,13 +21,20 @@
   <meta http-equiv="Window-target" content="_top" />
   <meta property="og:locale" content="zh_CN" />
   <meta property="og:title" content="{{ setting.site_title }}" />
-    <meta property="og:site_name" content="{{ setting.site_name }}" />
-    <meta property="og:url" content="{{ setting.site_url }}" />
-    <meta property="og:image" content="" />
+  <meta property="og:site_name" content="{{ setting.site_name }}" />
+  <meta property="og:url" content="{{ setting.site_url }}" />
+  <meta property="og:image" content="" />
   <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
   <link rel="canonical" href="{{ setting.site_url }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/black/base.css') }}?{{ random }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/black/article.css') }}?{{ random }}" />
   <link href="{{ url_for('static', filename='libs/bootstrap/3.3.6/css/bootstrap.min.css') }}" rel="stylesheet">
+
+ <script src="{{ url_for('static', filename='libs/jquery/2.1.4/jquery.min.js') }}"></script>
+ <script src="{{ url_for('static', filename='libs/bootstrap/3.3.6/js/bootstrap.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='libs/layer/layer.min.js') }}"></script>
+
  </head>
  <body>
   <header>
@@ -147,5 +155,19 @@
   <footer class="footer fn-clear">&copy; 2020
       <a href="{{ setting.site_url }}">{{ setting.site_foot }}</a>
   </footer>
+
+<script>
+
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        let csrftoken = $('meta[name=csrf-token]').attr('content')
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken)
+        }
+    }
+})
+
+</script>
+
  </body>
 </html>
